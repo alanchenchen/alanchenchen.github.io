@@ -1,39 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[聊一聊博客搬家]]></title>
-      <url>/2017/12/03/%E8%81%8A%E4%B8%80%E8%81%8A%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6/</url>
-      <content type="html"><![CDATA[<h2 id="新博客搬家到了hexo和github-page"><a href="#新博客搬家到了hexo和github-page" class="headerlink" title="新博客搬家到了hexo和github page"></a>新博客搬家到了hexo和github page</h2><p>来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦</p>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> 生活随笔 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2017/12/02/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[聊一聊博客搬家]]></title>
+    <url>%2F2017%2F12%2F03%2F%E8%81%8A%E4%B8%80%E8%81%8A%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6%2F</url>
+    <content type="text"><![CDATA[来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！ 好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄 之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内容了。一是es3目前虽然还在使用，但是es6发展如此迅速，es3不断被开发者放弃是迟早的事。二是我自己对于es语法的理解可能也仅限于一点点皮毛，如果再写，要是误导人就完蛋啦…😵 这个博客以后就用来给自己写写吐槽，然后记一记敲代码过程中学习到的一些知识。以后可能就会经常写框架的知识点啦，哈哈哈😎毕竟现在mvvm框架和webpack以及node是前端主流了，要是再不积极学习这些框架，可能就要gg… 😓 请不要吐槽我的排版，只用markdown写过github README的我已经很用心的在写了，你看，这不还加了emoji😝]]></content>
+      <tags>
+        <tag>生活随笔</tag>
+      </tags>
+  </entry>
 </search>
