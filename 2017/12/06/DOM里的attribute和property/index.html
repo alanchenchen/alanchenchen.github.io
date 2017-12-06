@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="javascript,HTML," />
+  <meta name="keywords" content="javascript,HTML,vue," />
 
 
 
@@ -80,19 +80,19 @@
 
 
 <meta name="description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibili">
-<meta name="keywords" content="javascript,HTML">
+<meta name="keywords" content="javascript,HTML,vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DOM里的attribute和property">
 <meta property="og:url" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/index.html">
 <meta property="og:site_name" content="Alan Chen">
 <meta property="og:description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibility特性(请注意我目前的措辞),大概代码如下： 1&amp;lt;div :visibi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png%27">
-<meta property="og:updated_time" content="2017-12-06T07:23:04.530Z">
+<meta property="og:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/print1.png">
+<meta property="og:updated_time" content="2017-12-06T09:14:06.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DOM里的attribute和property">
 <meta name="twitter:description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibility特性(请注意我目前的措辞),大概代码如下： 1&amp;lt;div :visibi">
-<meta name="twitter:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png%27">
+<meta name="twitter:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/print1.png">
 
 
 
@@ -406,17 +406,46 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">visibility</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>坑爹啊…vue api文档里不是说可以改变DOM自带的属性嘛？其实vue里v-bind有点坑，但是之所以不生效，是因为我之前没有理解DOM里attribute和property的问题。😭</p>
 <p><span style="color:red">ok，现在进入show time时间&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
-<h2 id="什么叫做dom的属性"><a class="header-anchor" href="#什么叫做dom的属性">¶</a>什么叫做DOM的属性</h2>
+<h1>什么叫做DOM的属性</h1>
 <p><code>属性</code>这个名称其实是对英文翻译的误解，因为在DOM里是有两个单词来解释的，一个是<code>attribute</code>,一个是<code>property</code>，这两个单词其实都有属性的意思，但是又各有不同。所以在我查了很多博客和segmentfault社区之后发现，目前最好的翻译应该是<code>attribute</code>—&gt;<strong>特性</strong>，<code>property</code>—&gt;<strong>属性</strong>。<br>
 那<em>attribute</em>和<em>property</em>到底又分别是代表什么呢？</p>
-<ol>
-<li>attribute是开发者自行添加的特性<br>
-什么意思呢？也就是说，开发者自行在html标签里添加的，不是DOM节点自带的，举个例子：</li>
-</ol>
+<h2 id="1-attribute是开发者自行添加的特性-property是标签自带的属性"><a class="header-anchor" href="#1-attribute是开发者自行添加的特性-property是标签自带的属性">¶</a>1. attribute是开发者自行添加的特性，property是标签自带的属性</h2>
+<p>什么意思呢？也就是说，attribute是开发者自行在html标签里添加的，不是DOM节点自带的，而property是只要你创建了这个html标签，就存在，举个例子：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span> <span class="attr">value</span>=<span class="string">"2333"</span> <span class="attr">data-sex</span>=<span class="string">"male"</span>&gt;</span>我是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们通过javascript获取DOM的方式获取到的DOM节点(有NodeList和HTMLCollection两种)，最好通过<code>document.getElementsByTagName</code>或<code>document.getElementsByClassName</code>来获取，因为打印的是一个集合，否则用其余方法获取的打印出来是一个标签节点<br>
-<img src="/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png'" alt=""></p>
-<p><code>id</code>和<code>data-sex</code>都是div这个节点自带的，但是我们通过类似赋值的方式给DOM节点对象里的<code>property</code>赋值啦。</p>
+<p>我们通过javascript获取DOM的方式获取DOM节点(有NodeList和HTMLCollection两种)，最好通过<code>document.getElementsByTagName</code>或<code>document.getElementsByClassName</code>来获取，因为打印的是一个集合，否则用其余方法获取的打印出来是一个标签节点<br>
+<img src="/2017/12/06/DOM里的attribute和property/print1.png" alt=""></p>
+<p><code>id</code>和<code>data-sex</code>都是div这个节点自带的，我们可以在这个节点对象属性里看到，这些就叫做这个节点对象的<code>property</code>。而value是我们自行添加，并不是标签原本就有，属于自定义特性，我们可以在这个节点对象的<code>attributes</code>属性里看到。<br>
+但是有一个很有意思的地方，就是虽然<code>id</code>和<code>data-sex</code>是节点对象的<code>property</code>，然而我们依然可以在<code>attributes</code>找到，说明<code>attributes</code>里存放的是我们在html标签写的所有(包括自带和自定义)。</p>
+<h2 id="2-attribute和property其实定义没有明确的界限"><a class="header-anchor" href="#2-attribute和property其实定义没有明确的界限">¶</a>2. attribute和property其实定义没有明确的界限</h2>
+<p>vue里关于v-bind绑定DOM属性解释的链接是<a href="https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html#" target="_blank" rel="noopener">stackoverflow上的答案</a>，这也是我查到的最全面也是最正确的解释。</p>
+<p><code>property</code>是每个html被创建时就存在的属性，就算我们不在标签里写上id，DOM节点对象里也存在id属性，而且<code>property</code>对于不同的html标签所对应的属性也不相同。比如：input有value和type属性，div就没有。a有href属性，div就没有。img有src属性(<span style="color:blue">这里有v-bind设计的坑</span>)，div就没有，button有disabled，别的就没有。但是都会有共有的一些属性，比如：accessKey，textContent，title,hidden…</p>
+<p><code>attribute</code>是开发者自行添加在html标签上的，可以是节点对象原本就有的，也可以是自定义的特性。只要在html标签上写了，我们就可以在节点对象的<code>attributes</code>属性里找到。</p>
+<h2 id="3-attribute和property读写存在区别"><a class="header-anchor" href="#3-attribute和property读写存在区别">¶</a>3. attribute和property读写存在区别</h2>
+<p>对于<code>property</code>，我们可以直接通过对象的属性这种方式来读写，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 box</span></span><br><span class="line"><span class="built_in">console</span>.log(box.dataset.sex) <span class="comment">// 打印出 male</span></span><br><span class="line">box.id = <span class="string">'alan'</span></span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 alan</span></span><br></pre></td></tr></table></figure>
+<p>对于<code>attribute</code>，我们只能通过DOM给定的方法<code>getAttribute()</code>和<code>setAttribute()</code>来读写，当然，也可以通过DOM节点对象的<code>attributes</code>属性获取，两者是等价的,获取class时，DOM节点的className和通过<code>getAttribute('class')</code>也是等价的。请注意：这两种方法也适用于读写<code>property</code>，但是它们存在细微的差别。<br>
+<code>getAttribute()</code>获取到的值永远是<code>string</code>类型，我们可以试一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consloe.log(<span class="keyword">typeof</span> box.getAttribute(<span class="string">'draggable'</span>)) <span class="comment">// 打印出string，但是我们从上图可以看出'draggable'明明是boolean类型</span></span><br></pre></td></tr></table></figure>
+<p><code>setAttribute()</code>在设置<code>attribute</code>特性时，<strong>参数必须是字符串</strong>，但是在设置<code>property</code>时可以是任何类型，这里发现了一个有趣的现象，当我在设置<strong>draggable</strong>时，除了false(Boolean)和’false’(String)可以让<strong>draggable</strong>为false外，其余设置的值都为true。所以我大胆猜测，DOM节点对于<code>property</code>有着严格的限制，对值的类型应该做了转换。</p>
+<h2 id="4-attribute和property写入有时同步-有时不同步"><a class="header-anchor" href="#4-attribute和property写入有时同步-有时不同步">¶</a>4. attribute和property写入有时同步，有时不同步</h2>
+<p>回到上面改变<strong>id</strong>的例子上，我们通过写入<code>property</code>改变了id属性，发现，页面里的html也发生了的变化，并且在此之后获取的<code>attribute</code>也同步发生了改变</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"alan"</span> <span class="attr">value</span>=<span class="string">"2333"</span> <span class="attr">data-sex</span>=<span class="string">"male"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>)</span><br><span class="line">box.id = <span class="string">'alan'</span></span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 alan</span></span><br><span class="line"><span class="built_in">console</span>.log(box.getAttribute(<span class="string">'id'</span>)) <span class="comment">// 打印出出 alan</span></span><br></pre></td></tr></table></figure>
+<p>我在stackoverflow上发现，除了input里的value属性不会导致属性和特性同步外，其余的都会同步。当然大家最好还是自己测一测😉</p>
+<blockquote>
+<p>在使用javascript的过程中，强烈建议大家通过setAttribute()来设置属性和特性，但是对于读取，还是得分开获取，因为getAttribute()只会获取到string，或者说，会强制把值改为string</p>
+</blockquote>
+<h1>vue的v-bind里对DOM的属性和特性有什么区别</h1>
+<p>现在回到文章开头的那个问题，prop这个修饰符意义到底在哪里。结合前面讲的所有知识，大概就能知道prop只适用于改变<code>property</code>。因为在vue的v-bind指令里，默认是给组件或者html标签添加<code>attribute</code>。很明显visibility不是<code>property</code>，而是<code>attribute</code>，如果想要使用prop来让标签隐藏，我们可以改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:hidden.prop</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样div就会被隐藏了，因为hidden是DOM节点对象的<strong>属性</strong></p>
+<blockquote>
+<p><span style="color:red">不得不讲的v-bind的api设计坑的地方:</span></p>
+</blockquote>
+<p>v-bind在英文文档里明明写着是<strong>绑定一个DOM特性或者组件的props</strong>，但是我在使用的时候，发现img标签可以直接<code>:src</code>，What’s the fuck?😳，你特喵的不是专门出了个prop修饰符来专门绑定DOM property嘛，那为什么src就直接绑定了，还有title，id等等都可以在不使用prop修饰符的情况下直接绑定成功…这就为难我胖虎了🙄 我只好理解为：<strong>vue允许v-bind可以直接绑定常用的DOM property，对于不常用的，或者说一般不会写在html的property只能用prop修饰符来搞定了…23333神坑</strong></p>
+<blockquote>
+<p>写在最后，我用textContent属性直接就实现了v-text的功能，innerHTML直接就实现了v-html的功能😝。最后的最后，我好像发现了vue通过props让父组件传值给子组件的原理。<code>害怕.jpg</code>😁,至于思路，我就不讲啦，哈哈哈，其实就是这篇文章里讲到的。</p>
+</blockquote>
 
       
     </div>
@@ -466,6 +495,8 @@
             <a href="/tags/javascript/" rel="tag"># javascript</a>
           
             <a href="/tags/HTML/" rel="tag"># HTML</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
           
         </div>
       
@@ -592,7 +623,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -655,7 +686,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么叫做dom的属性"><span class="nav-number">1.</span> <span class="nav-text">¶什么叫做DOM的属性</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">什么叫做DOM的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-attribute是开发者自行添加的特性-property是标签自带的属性"><span class="nav-number">1.1.</span> <span class="nav-text">¶1. attribute是开发者自行添加的特性，property是标签自带的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-attribute和property其实定义没有明确的界限"><span class="nav-number">1.2.</span> <span class="nav-text">¶2. attribute和property其实定义没有明确的界限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-attribute和property读写存在区别"><span class="nav-number">1.3.</span> <span class="nav-text">¶3. attribute和property读写存在区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-attribute和property写入有时同步-有时不同步"><span class="nav-number">1.4.</span> <span class="nav-text">¶4. attribute和property写入有时同步，有时不同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">vue的v-bind里对DOM的属性和特性有什么区别</span></a></li></ol></div>
             
 
           </div>
