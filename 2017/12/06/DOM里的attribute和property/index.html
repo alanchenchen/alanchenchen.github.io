@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Alan Chen的个人潜水技术博客 javascript ES6/7/8 vue react node webpack electron~" />
+  <meta name="keywords" content="javascript,HTML," />
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="前端小白的划水之路~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alan Chen">
-<meta property="og:url" content="http://alancc.cn/archives/2017/12/index.html">
+<meta name="description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibili">
+<meta name="keywords" content="javascript,HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM里的attribute和property">
+<meta property="og:url" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/index.html">
 <meta property="og:site_name" content="Alan Chen">
-<meta property="og:description" content="前端小白的划水之路~">
+<meta property="og:description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibility特性(请注意我目前的措辞),大概代码如下： 1&amp;lt;div :visibi">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png%27">
+<meta property="og:updated_time" content="2017-12-06T07:23:04.530Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alan Chen">
-<meta name="twitter:description" content="前端小白的划水之路~">
+<meta name="twitter:title" content="DOM里的attribute和property">
+<meta name="twitter:description" content="在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibility特性(请注意我目前的措辞),大概代码如下： 1&amp;lt;div :visibi">
+<meta name="twitter:image" content="http://alancc.cn/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png%27">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://alancc.cn/archives/2017/12/"/>
+  <link rel="canonical" href="http://alancc.cn/2017/12/06/DOM里的attribute和property/"/>
 
 
 
 
 
-  <title>归档 | Alan Chen</title>
+  <title>DOM里的attribute和property | Alan Chen</title>
   
 
 
@@ -143,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,111 +285,228 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alancc.cn/2017/12/06/DOM里的attribute和property/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alan Chen">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/12/06/DOM里的attribute和property/" itemprop="url">
-              
-                <span itemprop="name">DOM里的attribute和property</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">DOM里的attribute和property</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-06T13:53:53+08:00"
-              content="2017-12-06" >
-          12-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-06T13:53:53+08:00">
+                2017-12-06
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端编程/" itemprop="url" rel="index">
+                    <span itemprop="name">前端编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/06/DOM里的attribute和property/" class="leancloud_visitors" data-flag-title="DOM里的attribute和property">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/03/聊一聊博客搬家/" itemprop="url">
-              
-                <span itemprop="name">聊一聊博客搬家</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-03T18:45:29+08:00"
-              content="2017-12-03" >
-          12-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <p>在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为<strong>被用于绑定 DOM 属性 (property)</strong>。什么叫做DOM属性？然后这篇文章就来了…</p>
+<p>还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定<code>visibility</code>特性(<strong><span style="color:blue">请注意我目前的措辞</span></strong>),大概代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:visibility.prop</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是结果并不是div标签被隐藏掉，而是什么事情都不发生。What’s the fuck?😳不死心的我又尝试去掉了prop修饰符，结果虽然有了效果，但是也不是div被隐藏，而是div标签上多了一个自定义属性，在浏览器里像这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">visibility</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>坑爹啊…vue api文档里不是说可以改变DOM自带的属性嘛？其实vue里v-bind有点坑，但是之所以不生效，是因为我之前没有理解DOM里attribute和property的问题。😭</p>
+<p><span style="color:red">ok，现在进入show time时间&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
+<h2 id="什么叫做dom的属性"><a class="header-anchor" href="#什么叫做dom的属性">¶</a>什么叫做DOM的属性</h2>
+<p><code>属性</code>这个名称其实是对英文翻译的误解，因为在DOM里是有两个单词来解释的，一个是<code>attribute</code>,一个是<code>property</code>，这两个单词其实都有属性的意思，但是又各有不同。所以在我查了很多博客和segmentfault社区之后发现，目前最好的翻译应该是<code>attribute</code>—&gt;<strong>特性</strong>，<code>property</code>—&gt;<strong>属性</strong>。<br>
+那<em>attribute</em>和<em>property</em>到底又分别是代表什么呢？</p>
+<ol>
+<li>attribute是开发者自行添加的特性<br>
+什么意思呢？也就是说，开发者自行在html标签里添加的，不是DOM节点自带的，举个例子：</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span> <span class="attr">value</span>=<span class="string">"2333"</span> <span class="attr">data-sex</span>=<span class="string">"male"</span>&gt;</span>我是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们通过javascript获取DOM的方式获取到的DOM节点(有NodeList和HTMLCollection两种)，最好通过<code>document.getElementsByTagName</code>或<code>document.getElementsByClassName</code>来获取，因为打印的是一个集合，否则用其余方法获取的打印出来是一个标签节点<br>
+<img src="/2017/12/06/DOM里的attribute和property/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/print1.png'" alt=""></p>
+<p><code>id</code>和<code>data-sex</code>都是div这个节点自带的，但是我们通过类似赋值的方式给DOM节点对象里的<code>property</code>赋值啦。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>对，别说话，打钱！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Alan Chen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Alan Chen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/HTML/" rel="tag"># HTML</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/03/聊一聊博客搬家/" rel="next" title="聊一聊博客搬家">
+                <i class="fa fa-chevron-left"></i> 聊一聊博客搬家
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -393,6 +514,13 @@
 
 
           
+  
+    
+    <div id="gitalk-container"></div>
+
+  
+  
+
 
         </div>
         
@@ -413,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -508,6 +645,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么叫做dom的属性"><span class="nav-number">1.</span> <span class="nav-text">¶什么叫做DOM的属性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -651,6 +804,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
