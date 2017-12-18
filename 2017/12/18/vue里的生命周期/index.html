@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="生活随笔," />
+  <meta name="keywords" content="vue," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在w">
-<meta name="keywords" content="生活随笔">
+<meta name="description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍">
+<meta name="keywords" content="vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="聊一聊博客搬家">
-<meta property="og:url" content="http://alancc.cn/2017/12/03/聊一聊博客搬家/index.html">
+<meta property="og:title" content="Vue里的生命周期">
+<meta property="og:url" content="http://alancc.cn/2017/12/18/vue里的生命周期/index.html">
 <meta property="og:site_name" content="Alan Chen">
-<meta property="og:description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内">
+<meta property="og:description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍一遍每个周期函数，2333  ¶Vue里的各个生命周期 ¶1. beforeCr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-06T05:54:23.241Z">
+<meta property="og:updated_time" content="2017-12-18T07:11:13.374Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="聊一聊博客搬家">
-<meta name="twitter:description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内">
+<meta name="twitter:title" content="Vue里的生命周期">
+<meta name="twitter:description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍一遍每个周期函数，2333  ¶Vue里的各个生命周期 ¶1. beforeCr">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://alancc.cn/2017/12/03/聊一聊博客搬家/"/>
+  <link rel="canonical" href="http://alancc.cn/2017/12/18/vue里的生命周期/"/>
 
 
 
 
 
-  <title>聊一聊博客搬家 | Alan Chen</title>
+  <title>Vue里的生命周期 | Alan Chen</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://alancc.cn/2017/12/03/聊一聊博客搬家/">
+    <link itemprop="mainEntityOfPage" href="http://alancc.cn/2017/12/18/vue里的生命周期/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alan Chen">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">聊一聊博客搬家</h1>
+          <h1 class="post-title" itemprop="name headline">Vue里的生命周期</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T18:45:29+08:00">
-                2017-12-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T11:50:35+08:00">
+                2017-12-18
               </time>
             
 
@@ -337,6 +337,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端编程/" itemprop="url" rel="index">
+                    <span itemprop="name">前端编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -344,7 +366,7 @@
 
           
           
-             <span id="/2017/12/03/聊一聊博客搬家/" class="leancloud_visitors" data-flag-title="聊一聊博客搬家">
+             <span id="/2017/12/18/vue里的生命周期/" class="leancloud_visitors" data-flag-title="Vue里的生命周期">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -375,17 +397,44 @@
       
 
       
-        <p><strong>来来回回</strong>折腾了好久，最后还是准备重新开始收拾自己的<s>博客</s>啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333.</p>
-<blockquote class="blockquote-center"><p>请理解一个穷逼码农的日常没钱！</p>
-</blockquote>
-<p>好了，新的博客已经完全转到了<a href="https://hexo.io/zh-cn" target="_blank" rel="noopener">hexo</a>加<a href="https://github.com/" target="_blank" rel="noopener">GitHub page</a>的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站<br>
-😄</p>
-<hr>
-<p>之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内容了。<strong>一是es3目前虽然还在使用，但是es6发展如此迅速，es3不断被开发者放弃是迟早的事。二是我自己对于es语法的理解可能也仅限于一点点皮毛，如果再写，要是误导人就完蛋啦…😵</strong></p>
-<hr>
-<p>这个博客以后就用来给自己写写吐槽，然后记一记敲代码过程中学习到的一些知识。以后可能就会经常写框架的知识点啦，哈哈哈😎毕竟现在mvvm框架和webpack以及node是前端主流了，要是再不积极学习这些框架，可能就要gg… 😓</p>
+        <p>虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎</p>
 <blockquote>
-<p>请不要吐槽我的排版，只用markdown写过github README的我已经很用心的在写了，你看，这不还加了emoji😝</p>
+<p>聊之前咋们还是来简短介绍一遍每个周期函数，2333</p>
+</blockquote>
+<h2 id="vue里的各个生命周期"><a class="header-anchor" href="#vue里的各个生命周期">¶</a>Vue里的各个生命周期</h2>
+<h3 id="1-beforecreate"><a class="header-anchor" href="#1-beforecreate">¶</a>1. beforeCreate</h3>
+<p>在这个阶段，你基本做不了什么操作…因为Vue实例都未创建🙃</p>
+<h3 id="2-created"><a class="header-anchor" href="#2-created">¶</a>2. created</h3>
+<p>这里，基本上一个完整的Vue实例已经构建完成了，也就是说，你可以在这个阶段在组件里通过this拿到Vue实例，而且<code>data</code>和<code>watach</code>等Vue的选项也可以操作。但是Vue实例并未在真实DOM里渲染，所以你操作不了绑定的元素。<span style="color:blue">我们可以在这个时期从后台获取数据，当然你也可以在后面的生命周期获取，但是建议在created就获取数据并且进行数据处理</span></p>
+<h3 id="3-beforemount"><a class="header-anchor" href="#3-beforemount">¶</a>3. beforeMount</h3>
+<p>这个时候，只是Vue的<code>render</code>渲染函数开始运用，但是你仍然无法操作绑定的DOM</p>
+<h3 id="4-mounted"><a class="header-anchor" href="#4-mounted">¶</a>4. mounted</h3>
+<p>当生命周期进行到这个阶段，Vue实例的<code>el</code>选项已经可以使用，这个时候基本上所有Vue的选项都能正常使用，因为已经从虚拟DOM渲染到真实的DOM。</p>
+<h3 id="5-beforeupdate"><a class="header-anchor" href="#5-beforeupdate">¶</a>5. beforeUpdate</h3>
+<p>这个钩子函数比较有意思，并不是DOM的更新才会触发该钩子函数，而是虚拟DOM。也是就说只要Vue已经created后，一旦data里的数据发生改变，在数据更改之前就可以触发此钩子函数。</p>
+<h3 id="6-updated"><a class="header-anchor" href="#6-updated">¶</a>6. updated</h3>
+<p>和上面的生命周期函数类似，只是在数据发生改变，数据更改之后才会触发。</p>
+<h3 id="7-beforedestroy"><a class="header-anchor" href="#7-beforedestroy">¶</a>7. beforeDestroy</h3>
+<p>当Vue实例被销毁前，那么什么时候才会被销毁呢？一般来说，我们很少会去手动注销实例，目前只知道通过Vue自带的<code>$destroy</code>方法才能销毁(我猜测直接将Vue赋值为null也行)。<span style="color:blue">注意，这个时候，实例的所有属性仍然可以使用！</span></p>
+<h3 id="8-destroyed"><a class="header-anchor" href="#8-destroyed">¶</a>8. destroyed</h3>
+<p>Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。</p>
+<p>我只罗列了大部分的生命周期，因为以上的钩子函数会按照一定顺序运行一遍，而其它的像<code>activated</code>和<code>errorCaptured</code>等钩子函数，大家可以自行去官网了解。</p>
+<h2 id="vue的生命周期函数中需要注意的一些坑"><a class="header-anchor" href="#vue的生命周期函数中需要注意的一些坑">¶</a>Vue的生命周期函数中需要注意的一些坑</h2>
+<h3 id="1-什么时候从后台获取数据组好？"><a class="header-anchor" href="#1-什么时候从后台获取数据组好？">¶</a>1. 什么时候从后台获取数据组好？</h3>
+<p>其实Vue并没有规定什么时候获取数据最好，我们从每个钩子函数定义便可知，只要在Vue实例创建之后，也就是<code>created</code>中及以后的所有钩子函数里都可以从后台获取数据。但是，这里我建议大家还是在<code>created</code>钩子函数就获取数据，然后进行数据操作。原因嘛就是，从<code>beforeCreate</code>到<code>mounted</code>,这中间是一个流程，而且是不受任何东西影响的,并且数据请求是个异步的过程，而生命周期并不是等待数据返回再接着运行。举个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item of source"</span> <span class="attr">:key</span>=<span class="string">"item"</span> <span class="attr">ref</span>=<span class="string">"item"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        source:[]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">created()&#123;</span><br><span class="line">    ...从后台获取数据</span><br><span class="line">    <span class="keyword">this</span>.source = response<span class="comment">//将data里数据赋值为获取到的数据</span></span><br><span class="line">&#125;,</span><br><span class="line">mounted()&#123;</span><br><span class="line">    <span class="comment">//假如有一个数组项值为'Alan'</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.$refs.Alan)</span><br><span class="line">    <span class="comment">//这里可能会报错，此时的refs显示为未定义的Object的属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为什么可能会报错呢？其实，在大多数网络情况下，是肯定会报错。因为数据请求是个异步的操作，取决于网络情况和数据量的大小，谁都不知道什么时候才会返回完整的数据。而Vue的周期函数不会等待数据全部返回完毕后再接着从<code>created</code>往下走，而是一旦<code>created</code>了，就会接着<code>beforeMount</code>,然后<code>mounted</code>。所以，当我们在<code>mounted</code>里试图通过<code>$refs</code>属性获取<code>v-for</code>渲染的DOM时就会报错了，因为在<code>mounted</code>阶段，说不准数据还没返回完呢🙄 那虚拟DOM就还没完全渲染出真实DOM😜。当然，只有通过<code>v-for</code>渲染的DOM才会受影响。其余的我们自己写的正常html标签都可以正常获取…<br>
+那么，应该怎样获取我们通过后台返回数据而渲染的DOM节点呢？</p>
+<h3 id="2-updated是个好东西😝"><a class="header-anchor" href="#2-updated是个好东西😝">¶</a>2. updated是个好东西😝</h3>
+<p>通过上文即可知道，<code>updated</code>是不需要渲染真实DOM之后才能调用的钩子。也就是说，我们不需要担心什么时候真实DOM才会被渲染完成。上述代码改成这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item of source"</span> <span class="attr">:key</span>=<span class="string">"item"</span> <span class="attr">ref</span>=<span class="string">"item"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        source:[]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">created()&#123;</span><br><span class="line">    ...从后台获取数据</span><br><span class="line">    <span class="keyword">this</span>.source = response<span class="comment">//将data里数据赋值为获取到的数据</span></span><br><span class="line">&#125;,</span><br><span class="line">updated()&#123;</span><br><span class="line">    <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">//假如有一个数组项值为'Alan'</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.$refs.Alan)</span><br><span class="line">        <span class="comment">//这里可能会报错，此时的refs显示为未定义的Object的属性</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要原始数据source发生了改变，就可以在<code>updated</code>里执行代码。这里要注意的是，我使用了一个Vue的自带方法<code>$nextTick</code>。这个方法的意思是<span style="color:red">把回调函数内的操作延迟到下一个DOM更新循环之后</span>。这又是个啥玩意？😂。嘛，其实Vue本身会将所有DOM更新的操作放入一个队列里，然后根据实际情况(应该会考虑到性能)一个接一个执行真实的DOM更新(局部更新)，<code>$nextTick</code>就是会将方法内回调函数的操作延迟到队列里下一个DOM更新后执行。也就是说，会等到source获取完毕，然后真实DOM渲染完成后才执行。<code>$nextTick</code>非常常用，只要涉及到数据更新，就应该执行这个方法。</p>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>Vue的生命周期函数为开发者提供了非常便利的操作。但是善用生命周期才会不踩坑，一定需要注意数据获取是个异步过程，而生命周期函数的运行是独立的！只要涉及到DOM更新的操作，一定要使用<code>$nextTick</code>！😉</p>
+<blockquote>
+<p>哦啦，下次我想写写vue-router的生命周期函数，非常的强大哦~</p>
 </blockquote>
 
       
@@ -433,7 +482,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/生活随笔/" rel="tag"># 生活随笔</a>
+            <a href="/tags/vue/" rel="tag"># vue</a>
           
         </div>
       
@@ -446,15 +495,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/12/06/DOM里的attribute和property/" rel="next" title="DOM里的attribute和property">
+                <i class="fa fa-chevron-left"></i> DOM里的attribute和property
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/06/DOM里的attribute和property/" rel="prev" title="DOM里的attribute和property">
-                DOM里的attribute和property <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -509,8 +558,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -604,6 +662,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue里的各个生命周期"><span class="nav-number">1.</span> <span class="nav-text">¶Vue里的各个生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beforecreate"><span class="nav-number">1.1.</span> <span class="nav-text">¶1. beforeCreate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-created"><span class="nav-number">1.2.</span> <span class="nav-text">¶2. created</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-beforemount"><span class="nav-number">1.3.</span> <span class="nav-text">¶3. beforeMount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-mounted"><span class="nav-number">1.4.</span> <span class="nav-text">¶4. mounted</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-beforeupdate"><span class="nav-number">1.5.</span> <span class="nav-text">¶5. beforeUpdate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-updated"><span class="nav-number">1.6.</span> <span class="nav-text">¶6. updated</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-beforedestroy"><span class="nav-number">1.7.</span> <span class="nav-text">¶7. beforeDestroy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-destroyed"><span class="nav-number">1.8.</span> <span class="nav-text">¶8. destroyed</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue的生命周期函数中需要注意的一些坑"><span class="nav-number">2.</span> <span class="nav-text">¶Vue的生命周期函数中需要注意的一些坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么时候从后台获取数据组好？"><span class="nav-number">2.1.</span> <span class="nav-text">¶1. 什么时候从后台获取数据组好？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-updated是个好东西😝"><span class="nav-number">2.2.</span> <span class="nav-text">¶2. updated是个好东西😝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">¶总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
