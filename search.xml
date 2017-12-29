@@ -1,35 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[Vue里的生命周期]]></title>
-    <url>%2F2017%2F12%2F18%2Fvue%E9%87%8C%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%2F</url>
-    <content type="text"><![CDATA[虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎 聊之前咋们还是来简短介绍一遍每个周期函数，2333 ¶Vue里的各个生命周期 ¶1. beforeCreate 在这个阶段，你基本做不了什么操作…因为Vue实例都未创建🙃 ¶2. created 这里，基本上一个完整的Vue实例已经构建完成了，也就是说，你可以在这个阶段在组件里通过this拿到Vue实例，而且data和watach等Vue的选项也可以操作。但是Vue实例并未在真实DOM里渲染，所以你操作不了绑定的元素。我们可以在这个时期从后台获取数据，当然你也可以在后面的生命周期获取，但是建议在created就获取数据并且进行数据处理 ¶3. beforeMount 这个时候，只是Vue的render渲染函数开始运用，但是你仍然无法操作绑定的DOM ¶4. mounted 当生命周期进行到这个阶段，Vue实例的el选项已经可以使用，这个时候基本上所有Vue的选项都能正常使用，因为已经从虚拟DOM渲染到真实的DOM。 ¶5. beforeUpdate 这个钩子函数比较有意思，并不是DOM的更新才会触发该钩子函数，而是虚拟DOM。也是就说只要Vue已经created后，一旦data里的数据发生改变，在数据更改之前就可以触发此钩子函数。 ¶6. updated 和上面的生命周期函数类似，只是在数据发生改变，数据更改之后才会触发。 ¶7. beforeDestroy 当Vue实例被销毁前，那么什么时候才会被销毁呢？一般来说，我们很少会去手动注销实例，目前只知道通过Vue自带的$destroy方法才能销毁(我猜测直接将Vue赋值为null也行)。注意，这个时候，实例的所有属性仍然可以使用！ ¶8. destroyed Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。 我只罗列了大部分的生命周期，因为以上的钩子函数会按照一定顺序运行一遍，而其它的像activated和errorCaptured等钩子函数，大家可以自行去官网了解。 ¶Vue的生命周期函数中需要注意的一些坑 ¶1. 什么时候从后台获取数据组好？ 其实Vue并没有规定什么时候获取数据最好，我们从每个钩子函数定义便可知，只要在Vue实例创建之后，也就是created中及以后的所有钩子函数里都可以从后台获取数据。但是，这里我建议大家还是在created钩子函数就获取数据，然后进行数据操作。原因嘛就是，从beforeCreate到mounted,这中间是一个流程，而且是不受任何东西影响的,并且数据请求是个异步的过程，而生命周期并不是等待数据返回再接着运行。举个例子： 123&lt;ul&gt; &lt;li v-for="item of source" :key="item" ref="item"&gt;&lt;/li&gt;&lt;/ul&gt; 1234567891011121314data()&#123; return&#123; source:[] &#125;&#125;,created()&#123; ...从后台获取数据 this.source = response//将data里数据赋值为获取到的数据&#125;,mounted()&#123; //假如有一个数组项值为'Alan' console.log(this.$refs.Alan) //这里可能会报错，此时的refs显示为未定义的Object的属性&#125; 为什么可能会报错呢？其实，在大多数网络情况下，是肯定会报错。因为数据请求是个异步的操作，取决于网络情况和数据量的大小，谁都不知道什么时候才会返回完整的数据。而Vue的周期函数不会等待数据全部返回完毕后再接着从created往下走，而是一旦created了，就会接着beforeMount,然后mounted。所以，当我们在mounted里试图通过$refs属性获取v-for渲染的DOM时就会报错了，因为在mounted阶段，说不准数据还没返回完呢🙄 那虚拟DOM就还没完全渲染出真实DOM😜。当然，只有通过v-for渲染的DOM才会受影响。其余的我们自己写的正常html标签都可以正常获取… 那么，应该怎样获取我们通过后台返回数据而渲染的DOM节点呢？ ¶2. updated是个好东西😝 通过上文即可知道，updated是不需要渲染真实DOM之后才能调用的钩子。也就是说，我们不需要担心什么时候真实DOM才会被渲染完成。上述代码改成这样： 123&lt;ul&gt; &lt;li v-for="item of source" :key="item" ref="item"&gt;&lt;/li&gt;&lt;/ul&gt; 12345678910111213141516data()&#123; return&#123; source:[] &#125;&#125;,created()&#123; ...从后台获取数据 this.source = response//将data里数据赋值为获取到的数据&#125;,updated()&#123; this.$nextTick(()=&gt;&#123; //假如有一个数组项值为'Alan' console.log(this.$refs.Alan) //这里可能会报错，此时的refs显示为未定义的Object的属性 &#125;)&#125; 只要原始数据source发生了改变，就可以在updated里执行代码。这里要注意的是，我使用了一个Vue的自带方法$nextTick。这个方法的意思是把回调函数内的操作延迟到下一个DOM更新循环之后。这又是个啥玩意？😂。嘛，其实Vue本身会将所有DOM更新的操作放入一个队列里，然后根据实际情况(应该会考虑到性能)一个接一个执行真实的DOM更新(局部更新)，$nextTick就是会将方法内回调函数的操作延迟到队列里下一个DOM更新后执行。也就是说，会等到source获取完毕，然后真实DOM渲染完成后才执行。$nextTick非常常用，只要涉及到数据更新，就应该执行这个方法。 ¶总结 Vue的生命周期函数为开发者提供了非常便利的操作。但是善用生命周期才会不踩坑，一定需要注意数据获取是个异步过程，而生命周期函数的运行是独立的！只要涉及到DOM更新的操作，一定要使用$nextTick！😉 哦啦，下次我想写写vue-router的生命周期函数，非常的强大哦~]]></content>
-      <categories>
-        <category>前端编程</category>
-      </categories>
-      <tags>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[DOM里的attribute和property]]></title>
-    <url>%2F2017%2F12%2F06%2FDOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty%2F</url>
-    <content type="text"><![CDATA[在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为被用于绑定 DOM 属性 (property)。什么叫做DOM属性？然后这篇文章就来了… 还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定visibility特性(请注意我目前的措辞),大概代码如下： 1&lt;div :visibility.prop="false"&gt;看的到我嘛？&lt;/div&gt; 但是结果并不是div标签被隐藏掉，而是什么事情都不发生。What’s the fuck?😳不死心的我又尝试去掉了prop修饰符，结果虽然有了效果，但是也不是div被隐藏，而是div标签上多了一个自定义属性，在浏览器里像这样： 1&lt;div visibility="false"&gt;看的到我嘛？&lt;/div&gt; 坑爹啊…vue api文档里不是说可以改变DOM自带的属性嘛？其实vue里v-bind有点坑，但是之所以不生效，是因为我之前没有理解DOM里attribute和property的问题。😭 ok，现在进入show time时间&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; 什么叫做DOM的属性 属性这个名称其实是对英文翻译的误解，因为在DOM里是有两个单词来解释的，一个是attribute,一个是property，这两个单词其实都有属性的意思，但是又各有不同。所以在我查了很多博客和segmentfault社区之后发现，目前最好的翻译应该是attribute—&gt;特性，property—&gt;属性。 那attribute和property到底又分别是代表什么呢？ ¶1. attribute是开发者自行添加的特性，property是标签自带的属性 什么意思呢？也就是说，attribute是开发者自行在html标签里添加的，不是DOM节点自带的，而property是只要你创建了这个html标签，就存在，举个例子： 1&lt;div id="box" value="2333" data-sex="male"&gt;我是一个div&lt;/div&gt; 我们通过javascript获取DOM的方式获取DOM节点(有NodeList和HTMLCollection两种)，最好通过document.getElementsByTagName或document.getElementsByClassName来获取，因为打印的是一个集合，否则用其余方法获取的打印出来是一个标签节点 id和data-sex都是div这个节点自带的，我们可以在这个节点对象属性里看到，这些就叫做这个节点对象的property。而value是我们自行添加，并不是标签原本就有，属于自定义特性，我们可以在这个节点对象的attributes属性里看到。 但是有一个很有意思的地方，就是虽然id和data-sex是节点对象的property，然而我们依然可以在attributes找到，说明attributes里存放的是我们在html标签写的所有(包括自带和自定义)。 ¶2. attribute和property其实定义没有明确的界限 vue里关于v-bind绑定DOM属性解释的链接是stackoverflow上的答案，这也是我查到的最全面也是最正确的解释。 property是每个html被创建时就存在的属性，就算我们不在标签里写上id，DOM节点对象里也存在id属性，而且property对于不同的html标签所对应的属性也不相同。比如：input有value和type属性，div就没有。a有href属性，div就没有。img有src属性(这里有v-bind设计的坑)，div就没有，button有disabled，别的就没有。但是都会有共有的一些属性，比如：accessKey，textContent，title,hidden… attribute是开发者自行添加在html标签上的，可以是节点对象原本就有的，也可以是自定义的特性。只要在html标签上写了，我们就可以在节点对象的attributes属性里找到。 ¶3. attribute和property读写存在区别 对于property，我们可以直接通过对象的属性这种方式来读写，比如： 12345const box = document.querySelector('#box')console.log(box.id) // 打印出出 boxconsole.log(box.dataset.sex) // 打印出 malebox.id = 'alan'console.log(box.id) // 打印出出 alan 对于attribute，我们只能通过DOM给定的方法getAttribute()和setAttribute()来读写，当然，也可以通过DOM节点对象的attributes属性获取，两者是等价的,获取class时，DOM节点的className和通过getAttribute('class')也是等价的。请注意：这两种方法也适用于读写property，但是它们存在细微的差别。 getAttribute()获取到的值永远是string类型，我们可以试一下： 1consloe.log(typeof box.getAttribute('draggable')) // 打印出string，但是我们从上图可以看出'draggable'明明是boolean类型 setAttribute()在设置attribute特性时，参数必须是字符串，但是在设置property时可以是任何类型，这里发现了一个有趣的现象，当我在设置draggable时，除了false(Boolean)和’false’(String)可以让draggable为false外，其余设置的值都为true。所以我大胆猜测，DOM节点对于property有着严格的限制，对值的类型应该做了转换。 ¶4. attribute和property写入有时同步，有时不同步 回到上面改变id的例子上，我们通过写入property改变了id属性，发现，页面里的html也发生了的变化，并且在此之后获取的attribute也同步发生了改变 1&lt;div id="alan" value="2333" data-sex="male"&gt;&lt;/div&gt; 1234const box = document.querySelector('#box')box.id = 'alan'console.log(box.id) // 打印出出 alanconsole.log(box.getAttribute('id')) // 打印出出 alan 我在stackoverflow上发现，除了input里的value属性不会导致属性和特性同步外，其余的都会同步。当然大家最好还是自己测一测😉 在使用javascript的过程中，强烈建议大家通过setAttribute()来设置属性和特性，但是对于读取，还是得分开获取，因为getAttribute()只会获取到string，或者说，会强制把值改为string vue的v-bind里对DOM的属性和特性有什么区别 现在回到文章开头的那个问题，prop这个修饰符意义到底在哪里。结合前面讲的所有知识，大概就能知道prop只适用于改变property。因为在vue的v-bind指令里，默认是给组件或者html标签添加attribute。很明显visibility不是property，而是attribute，如果想要使用prop来让标签隐藏，我们可以改为 1&lt;div :hidden.prop="false"&gt;看的到我嘛？&lt;/div&gt; 这样div就会被隐藏了，因为hidden是DOM节点对象的属性 不得不讲的v-bind的api设计坑的地方: v-bind在英文文档里明明写着是绑定一个DOM特性或者组件的props，但是我在使用的时候，发现img标签可以直接:src，What’s the fuck?😳，你特喵的不是专门出了个prop修饰符来专门绑定DOM property嘛，那为什么src就直接绑定了，还有title，id等等都可以在不使用prop修饰符的情况下直接绑定成功…这就为难我胖虎了🙄 我只好理解为：vue允许v-bind可以直接绑定常用的DOM property，对于不常用的，或者说一般不会写在html的property只能用prop修饰符来搞定了…23333神坑 写在最后，我用textContent属性直接就实现了v-text的功能，innerHTML直接就实现了v-html的功能😝。最后的最后，我好像发现了vue通过props让父组件传值给子组件的原理。害怕.jpg😁,至于思路，我就不讲啦，哈哈哈，其实就是这篇文章里讲到的。]]></content>
-      <categories>
-        <category>前端编程</category>
-      </categories>
-      <tags>
-        <tag>javascript</tag>
-        <tag>HTML</tag>
-        <tag>vue</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[聊一聊博客搬家]]></title>
-    <url>%2F2017%2F12%2F03%2F%E8%81%8A%E4%B8%80%E8%81%8A%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6%2F</url>
-    <content type="text"><![CDATA[来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！ 好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄 之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内容了。一是es3目前虽然还在使用，但是es6发展如此迅速，es3不断被开发者放弃是迟早的事。二是我自己对于es语法的理解可能也仅限于一点点皮毛，如果再写，要是误导人就完蛋啦…😵 这个博客以后就用来给自己写写吐槽，然后记一记敲代码过程中学习到的一些知识。以后可能就会经常写框架的知识点啦，哈哈哈😎毕竟现在mvvm框架和webpack以及node是前端主流了，要是再不积极学习这些框架，可能就要gg… 😓 请不要吐槽我的排版，只用markdown写过github README的我已经很用心的在写了，你看，这不还加了emoji😝]]></content>
-      <tags>
-        <tag>生活随笔</tag>
-      </tags>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[谈谈webpack构建开发环境的基础配置]]></title>
+      <url>/2017/12/29/%E8%B0%88%E8%B0%88webpack%E6%9E%84%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p>前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱<br>
+现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(<span style="color:blue">就是很羡慕~</span>)。二是将javascript应用到app的行业里，当然也分为3大方向，webapp，hybrid app以及native app，其中受限于性能问题，目前native app可以说是大公司的主力军，最出名的就是facebook的react native了，简直就是神器！🤓我是不怎么看好hybrid app，相反，最开始被人嫌弃的webapp反而由于google推出的PWA(<span style="color:blue">progressive web app 俗称渐进式webapp</span>)而焕发新的活力。最后一个大方向就是前端工程化和组件化咯，最具代表的就是angular、vue和react三大框架，这三大框架在工程化和模块化的实现上，很大程度归功于webpack这款无敌的打包工具 ，咋们主题开始！</p>
+<h2 id="webpack为什么这么流行"><a class="header-anchor" href="#webpack为什么这么流行">¶</a>webpack为什么这么流行</h2>
+<p>这个问题就很玄学了，哈哈哈。其实对于小白或者刚入前端不久的人来说，前端工程化是个非常模糊的概念，但是对于从后端转向前端的程序猿来说，工程化是个顺理成章的玩意。<br>
+常言道，需求决定学习(<span style="color:blue">就是我说的😁</span>)。对于业务逻辑非常简单的小项目，工程化就是增加工作量，但是一旦业务逻辑开始复杂，产品经理不停给你加什么需求啊，改bug啊，那么工程化就是刚需品。所谓工程化，就是尽可能将业务逻辑分解，细化成单一的逻辑，在前端javascript里就是(<span style="color:blue">说人话就是</span>)尽可能写通用的“函数”。打个比方：</p>
+<blockquote>
+<p>在登录验证的时候我们经常需要用到手机号验证之类的</p>
+</blockquote>
+<p>1.传统开发的写法</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'.login'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tel = $(<span class="string">'#tel'</span>).val().toString().trim()</span><br><span class="line">    <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span></span><br><span class="line">    <span class="keyword">if</span>(rule.test(tel))&#123;</span><br><span class="line">        <span class="comment">//验证成功</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//验证失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里我写的代码还算比较规范的，23333自己吹一下，大部分传统前端应该都会采用上述类似的写法，但是大家思考一个问题，如果我们需要在不同页面里都要使用到手机号验证这个逻辑呢？难道每个需要的地方都重复复制粘贴一遍吗？想想就是噩梦…😢所以，我们修改一下，这里直接跳过简单的函数封装，我们才用“模块开发”</p>
+<p>2.模块开发的写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写法一，CommonJS，Node遵循的规范</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">VerifyTelephone</span>(<span class="params">tel</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span> </span><br><span class="line">    <span class="keyword">return</span> rule.test(tel)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = VerifyTelephone</span><br><span class="line"><span class="comment">//然后引入就直接require就行啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//写法二，ES6的规范</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>  <span class="function"><span class="keyword">function</span> <span class="title">VerifyTelephone</span>(<span class="params">tel</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span> </span><br><span class="line">        <span class="keyword">return</span> rule.test(tel)</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//然后引入，直接import form就行啦</span></span><br></pre></td></tr></table></figure>
+<p>最厉害的<code>webpack</code>即将登场！既然咋们说了模块化和工程化是刚需，那么webpack为什么流行呢？因为它几乎支持目前所有主流的模块规范😜就是这么牛批！并且，webpack已经不仅仅局限于一个打包器的角色，还囊括了各种吊炸天的loader和plugins，基本通过配置webpack，我们可以轻松实现本地部署服务器，随意写ES2015/6/7/8等语法，可以写less/sass/scss/stylus等预编译工具，当然，webpack还支持各种配置的打包，什么压缩混淆啦，按需打包啦，代码切割啦，等等等等…</p>
+<h2 id="webpack最基础配置应该包括哪些"><a class="header-anchor" href="#webpack最基础配置应该包括哪些">¶</a>webpack最基础配置应该包括哪些</h2>
+<ol>
+<li>entry(入口)和output(打包出口)<br>
+entry就是告诉webpack你需要打包哪些文件，webpack是以js为入口文件，因为webpack认为<span style="color:red;font-weight:bold;">一切皆模块</span>，所以所有资源都可以被当作模块引入到js文件里，比如：图片，字体图片，CSS文件…<br>
+entry支持多种写法，单入口默认是字符串，多入口可以是数组也可以是对象。这里建议大家采用对象写法，key是每个模块的名称，value是模块路径。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:&#123;</span><br><span class="line">        main:<span class="string">'./main.js'</span>,</span><br><span class="line">        about:<span class="string">'./about.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">        path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">        publicPath: <span class="string">'../dist/'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>output决定了webpack打包后输出的一些配置，包含输出文件名称，输出的路径和打包后html里引入js或css的路径(<span style="color:blue">划重点，这是webpack最坑的地方之一😂</span>)，filename里出现了一个<code>name</code>属性，这里就是entry里提到的key，针对多入口打包非常方便！😘<code>punlicPath</code>这个属性比较奇怪，目前我个人理解为当前webpack.config.js里引入打包后文件夹的相对路径，例如打包到dist文件夹内，引入路径就是’…/dist/’，这个属性决定的是打包后html引入js，js里引入css，css里引入img这些静态资源的路径，和<code>path</code>有本质的区别</p>
+<ol start="2">
+<li>module(配置各种loader来解析非js的文件)</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:&#123;</span><br><span class="line">        main:<span class="string">'./main.js'</span>,</span><br><span class="line">        about:<span class="string">'./about.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">        path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">        publicPath: <span class="string">'../dist/'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>:&#123;</span><br><span class="line">        rules:[</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,<span class="comment">//打包js，转码ES6</span></span><br><span class="line">                exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">                include: path.join(ROOTPATH, <span class="string">'src'</span>),</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        presets: [<span class="string">'es2015'</span>, <span class="string">'latest'</span>, <span class="string">'env'</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>webpack所有的loader都写在module属性的rules里，上述代码是webpack3.0的写法，请不要再去复制粘贴网上一堆博客里的2.0写法了，可能会报错。webpack配置文档目前已经比较完善了，可以自行去看<a href="https://doc.webpack-china.org/" target="_blank" rel="noopener">中文文档</a></p>
+<ol start="3">
+<li>plugins(插件)<br>
+plugins可以说是和loader一样牛批的东西，很多高级的玩意都是通过这个来实现的，比如压缩混淆js，打包后从js里提取css为一个单独的文件，自动提取模板html并且插入js，每次启动webpack自动清除打包文件…<br>
+因为plugins实在太多，这里就不一 一列举了，上面说的功能大多就是常用的啦，尤其是<code>UglifyJSPlugin</code>(压缩混淆js),<code>extract-text-webpack-plugin</code>(提取css到一个文件)),<code>html-webpack-plugin</code>(自动生成模板html)这三者最为常用<br>
+下面是plugins的写法：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>)</span><br><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"> <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     entry:&#123;</span><br><span class="line">         main:<span class="string">'./main.js'</span>,</span><br><span class="line">         about:<span class="string">'./about.js'</span></span><br><span class="line">     &#125;,</span><br><span class="line">     output:&#123;</span><br><span class="line">         filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">         path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">         publicPath: <span class="string">'../dist/'</span></span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="built_in">module</span>:&#123;</span><br><span class="line">         rules:[</span><br><span class="line">             &#123;</span><br><span class="line">                 test: <span class="regexp">/\.js$/</span>,<span class="comment">//打包js，转码ES6</span></span><br><span class="line">                 exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">                 include: path.join(ROOTPATH, <span class="string">'src'</span>),</span><br><span class="line">                 use: &#123;</span><br><span class="line">                     loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                     options: &#123;</span><br><span class="line">                         presets: [<span class="string">'es2015'</span>, <span class="string">'latest'</span>, <span class="string">'env'</span>]</span><br><span class="line">                     &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">         ]</span><br><span class="line">     &#125;,</span><br><span class="line">     plugins:[</span><br><span class="line">         <span class="keyword">new</span> ExtractTextPlugin(<span class="string">'static/style/[name]-css.css'</span>)</span><br><span class="line">     ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>devServer(本地开发服务器)<br>
+这个配置比较常用，但是很多人第一次玩webpack可能根本不会注意到😅，通过这个配置，我们可以轻松实现搭建一个本地服务器，并且实现js的热更新和热替换。当然，webpack除了支持这种最简便的属性配置外，也提供基于’<a href="http://www.expressjs.com.cn/" target="_blank" rel="noopener">express</a>’框架的中间件，包括服务器中间件，热更新和热替换的中间件。具体详情请戳官网<br>
+devServer常用的配置如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">   devServer: &#123;</span><br><span class="line">	contentBase: process.cwd(),<span class="comment">//当前是以项目根目录作为本地服务器根目录</span></span><br><span class="line">	port: port,</span><br><span class="line">	hot: <span class="literal">true</span>,</span><br><span class="line">	inline: <span class="literal">true</span>,</span><br><span class="line">	openPage: <span class="string">'dist/index.html'</span>,</span><br><span class="line">	historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">	noInfo: <span class="literal">true</span>,<span class="comment">//不显示打包的信息</span></span><br><span class="line">	overlay: &#123;<span class="comment">//全屏显示错误和警告</span></span><br><span class="line">		warnings: <span class="literal">true</span>,</span><br><span class="line">		errors: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一定要注意<code>contentBase</code>的含义，这个属性是说作为服务器的根目录，其实webpack的devServer在你打包后运行时是找不到打包文件的，因为webpack将其放在了电脑内存中。所以在设置开发环境时的<code>output</code>选项里的<code>publicPath</code>得自行脑补了…哈哈哈哈😊</p>
+<ol start="5">
+<li>devtool(生成soureMap)<br>
+一定有很多新手不知道这到底是个啥玩意，其实只要我们仔细思考一样就会发现sourceMap非常重要。sourceMap其实是每当webpack打包后生成的对应js的映射文件，用于debugger。因为打包后文件基本无法阅读，所以这个sourceMap可以直接被绝大多数浏览器解析，根据不同配置，基本跟源码一样。<br>
+sourceMap有很多不同的配置，具体详情请移步官网</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool: env == <span class="string">'production'</span> ? <span class="string">'source-map'</span> : <span class="string">'eval-source-map'</span></span><br></pre></td></tr></table></figure>
+<p>但是一般我们开发都是上述配置，开发环境就生成非常完善的映射，生产环境则减小文件大小</p>
+<ol start="6">
+<li>resolve<br>
+resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>，前者是用来解决路径的依赖，比如自定义’@‘为’./src/components’路径。后者是用来让webpack自动解析定义后缀名的文件,常见写法如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> resolve: &#123;</span><br><span class="line">     alias: &#123;</span><br><span class="line">      <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src'</span>)</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;,</span><br><span class="line">extensions: [<span class="string">'.js'</span>, <span class="string">'.json'</span>,<span class="string">'jsx'</span>,<span class="string">'css'</span>]</span><br><span class="line"><span class="comment">//.js和.json是默认值，可以不用定义</span></span><br></pre></td></tr></table></figure>
+<p>以上就是webpack用来配置一个完整功能的基本配置啦，😁通过这一套配置，就可以轻松实现一个开发和打包兼备的webpack模板。</p>
+<h2 id="通过webpack来看前端工程化"><a class="header-anchor" href="#通过webpack来看前端工程化">¶</a>通过webpack来看前端工程化</h2>
+<p>其实我个人对于前端工程化这个词理解的也很浅显，这两年因为mvvm框架的大火导致工程化和组件化这些新词不断涌入到前端开发里。我个人感觉，随着前端不断被重视，随着前后台分离越来越彻底，那么前端就要负责更多的业务逻辑，而后台只用扮演接受数据和处理数据的角色。对于中大型项目，工程化是必须的，我个人理解为，工程化所需要的基本条件是：webpack、gulp(用task流程化)、一种mvvm框架。这三者是必须的，甚至css module或者css in js这些也可以用来把css工程化。<br>
+<span style="color:blue">对于不同的开发场景，我给自己定义了两者种工程化开发方式：</span></p>
+<ol>
+<li>传统多页面开发，一定要用webpack模块化，甚至可以使用<code>jade</code>这些模板引擎，js编写可以使用CommonJS或者ES6 module，建议使用ES6 module。</li>
+</ol>
+<blockquote>
+<p>这里我推荐一下自己写的此类场景的webpack模板 – <a href="https://github.com/alanchenchen/simple-template" target="_blank" rel="noopener">simple-template</a>😅,轻松解决本地服务器和打包问题</p>
+</blockquote>
+<ol start="2">
+<li>SPA单页面开发，目前这是mvvm框架的开发方式，也是主流。Angular我本身没有学习所以不加评论，Vue我建议直接用官方的<code>vue-cli</code>是最舒心的。对于React，官方的<code>create-react-app</code>我并没有使用，听说功能很丰富只是过于冗余，所以网上有一堆大佬写的脚手架模板，这里我推荐的是阿里金服开发的<a href="https://github.com/dvajs/dva/blob/master/README_zh-CN.md" target="_blank" rel="noopener">dva-cli</a>，非常好用哦，搭配着<span style="color:blue">AntDesign</span>食用更加哦！</li>
+</ol>
+<blockquote>
+<p>当然这里还是推荐一下啊在下写的一个<a href="https://github.com/alanchenchen/react-template" target="_blank" rel="noopener">react-template</a>哈哈哈哈😋目前功能也比较全乎了，并且还抽离了第三库的公共模块，减小打包体积。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端构建工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Vue里的生命周期]]></title>
+      <url>/2017/12/18/vue%E9%87%8C%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
+      <content type="html"><![CDATA[<p>虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎</p>
+<blockquote>
+<p>聊之前咋们还是来简短介绍一遍每个周期函数，2333</p>
+</blockquote>
+<h2 id="vue里的各个生命周期"><a class="header-anchor" href="#vue里的各个生命周期">¶</a>Vue里的各个生命周期</h2>
+<h3 id="1-beforecreate"><a class="header-anchor" href="#1-beforecreate">¶</a>1. beforeCreate</h3>
+<p>在这个阶段，你基本做不了什么操作…因为Vue实例都未创建🙃</p>
+<h3 id="2-created"><a class="header-anchor" href="#2-created">¶</a>2. created</h3>
+<p>这里，基本上一个完整的Vue实例已经构建完成了，也就是说，你可以在这个阶段在组件里通过this拿到Vue实例，而且<code>data</code>和<code>watach</code>等Vue的选项也可以操作。但是Vue实例并未在真实DOM里渲染，所以你操作不了绑定的元素。<span style="color:blue">我们可以在这个时期从后台获取数据，当然你也可以在后面的生命周期获取，但是建议在created就获取数据并且进行数据处理</span></p>
+<h3 id="3-beforemount"><a class="header-anchor" href="#3-beforemount">¶</a>3. beforeMount</h3>
+<p>这个时候，只是Vue的<code>render</code>渲染函数开始运用，但是你仍然无法操作绑定的DOM</p>
+<h3 id="4-mounted"><a class="header-anchor" href="#4-mounted">¶</a>4. mounted</h3>
+<p>当生命周期进行到这个阶段，Vue实例的<code>el</code>选项已经可以使用，这个时候基本上所有Vue的选项都能正常使用，因为已经从虚拟DOM渲染到真实的DOM。</p>
+<h3 id="5-beforeupdate"><a class="header-anchor" href="#5-beforeupdate">¶</a>5. beforeUpdate</h3>
+<p>这个钩子函数比较有意思，并不是DOM的更新才会触发该钩子函数，而是虚拟DOM。也是就说只要Vue已经created后，一旦data里的数据发生改变，在数据更改之前就可以触发此钩子函数。</p>
+<h3 id="6-updated"><a class="header-anchor" href="#6-updated">¶</a>6. updated</h3>
+<p>和上面的生命周期函数类似，只是在数据发生改变，数据更改之后才会触发。</p>
+<h3 id="7-beforedestroy"><a class="header-anchor" href="#7-beforedestroy">¶</a>7. beforeDestroy</h3>
+<p>当Vue实例被销毁前，那么什么时候才会被销毁呢？一般来说，我们很少会去手动注销实例，目前只知道通过Vue自带的<code>$destroy</code>方法才能销毁(我猜测直接将Vue赋值为null也行)。<span style="color:blue">注意，这个时候，实例的所有属性仍然可以使用！</span></p>
+<h3 id="8-destroyed"><a class="header-anchor" href="#8-destroyed">¶</a>8. destroyed</h3>
+<p>Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。</p>
+<p>我只罗列了大部分的生命周期，因为以上的钩子函数会按照一定顺序运行一遍，而其它的像<code>activated</code>和<code>errorCaptured</code>等钩子函数，大家可以自行去官网了解。</p>
+<h2 id="vue的生命周期函数中需要注意的一些坑"><a class="header-anchor" href="#vue的生命周期函数中需要注意的一些坑">¶</a>Vue的生命周期函数中需要注意的一些坑</h2>
+<h3 id="1-什么时候从后台获取数据组好？"><a class="header-anchor" href="#1-什么时候从后台获取数据组好？">¶</a>1. 什么时候从后台获取数据组好？</h3>
+<p>其实Vue并没有规定什么时候获取数据最好，我们从每个钩子函数定义便可知，只要在Vue实例创建之后，也就是<code>created</code>中及以后的所有钩子函数里都可以从后台获取数据。但是，这里我建议大家还是在<code>created</code>钩子函数就获取数据，然后进行数据操作。原因嘛就是，从<code>beforeCreate</code>到<code>mounted</code>,这中间是一个流程，而且是不受任何东西影响的,并且数据请求是个异步的过程，而生命周期并不是等待数据返回再接着运行。举个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item of source"</span> <span class="attr">:key</span>=<span class="string">"item"</span> <span class="attr">ref</span>=<span class="string">"item"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        source:[]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">created()&#123;</span><br><span class="line">    ...从后台获取数据</span><br><span class="line">    <span class="keyword">this</span>.source = response<span class="comment">//将data里数据赋值为获取到的数据</span></span><br><span class="line">&#125;,</span><br><span class="line">mounted()&#123;</span><br><span class="line">    <span class="comment">//假如有一个数组项值为'Alan'</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.$refs.Alan)</span><br><span class="line">    <span class="comment">//这里可能会报错，此时的refs显示为未定义的Object的属性</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为什么可能会报错呢？其实，在大多数网络情况下，是肯定会报错。因为数据请求是个异步的操作，取决于网络情况和数据量的大小，谁都不知道什么时候才会返回完整的数据。而Vue的周期函数不会等待数据全部返回完毕后再接着从<code>created</code>往下走，而是一旦<code>created</code>了，就会接着<code>beforeMount</code>,然后<code>mounted</code>。所以，当我们在<code>mounted</code>里试图通过<code>$refs</code>属性获取<code>v-for</code>渲染的DOM时就会报错了，因为在<code>mounted</code>阶段，说不准数据还没返回完呢🙄 那虚拟DOM就还没完全渲染出真实DOM😜。当然，只有通过<code>v-for</code>渲染的DOM才会受影响。其余的我们自己写的正常html标签都可以正常获取…<br>
+那么，应该怎样获取我们通过后台返回数据而渲染的DOM节点呢？</p>
+<h3 id="2-updated是个好东西😝"><a class="header-anchor" href="#2-updated是个好东西😝">¶</a>2. updated是个好东西😝</h3>
+<p>通过上文即可知道，<code>updated</code>是不需要渲染真实DOM之后才能调用的钩子。也就是说，我们不需要担心什么时候真实DOM才会被渲染完成。上述代码改成这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item of source"</span> <span class="attr">:key</span>=<span class="string">"item"</span> <span class="attr">ref</span>=<span class="string">"item"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        source:[]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">created()&#123;</span><br><span class="line">    ...从后台获取数据</span><br><span class="line">    <span class="keyword">this</span>.source = response<span class="comment">//将data里数据赋值为获取到的数据</span></span><br><span class="line">&#125;,</span><br><span class="line">updated()&#123;</span><br><span class="line">    <span class="keyword">this</span>.$nextTick(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">//假如有一个数组项值为'Alan'</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.$refs.Alan)</span><br><span class="line">        <span class="comment">//这里可能会报错，此时的refs显示为未定义的Object的属性</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要原始数据source发生了改变，就可以在<code>updated</code>里执行代码。这里要注意的是，我使用了一个Vue的自带方法<code>$nextTick</code>。这个方法的意思是<span style="color:red">把回调函数内的操作延迟到下一个DOM更新循环之后</span>。这又是个啥玩意？😂。嘛，其实Vue本身会将所有DOM更新的操作放入一个队列里，然后根据实际情况(应该会考虑到性能)一个接一个执行真实的DOM更新(局部更新)，<code>$nextTick</code>就是会将方法内回调函数的操作延迟到队列里下一个DOM更新后执行。也就是说，会等到source获取完毕，然后真实DOM渲染完成后才执行。<code>$nextTick</code>非常常用，只要涉及到数据更新，就应该执行这个方法。</p>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>Vue的生命周期函数为开发者提供了非常便利的操作。但是善用生命周期才会不踩坑，一定需要注意数据获取是个异步过程，而生命周期函数的运行是独立的！只要涉及到DOM更新的操作，一定要使用<code>$nextTick</code>！😉</p>
+<blockquote>
+<p>哦啦，下次我想写写vue-router的生命周期函数，非常的强大哦~</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端编程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> vue </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[DOM里的attribute和property]]></title>
+      <url>/2017/12/06/DOM%E9%87%8C%E7%9A%84attribute%E5%92%8Cproperty/</url>
+      <content type="html"><![CDATA[<p>在偶然间使用vue里的v-bind指令，发现v-bind竟然还有一个prop的修饰符。喵喵喵？😎一下子我的好奇心就来，vue的中文文档翻译为<strong>被用于绑定 DOM 属性 (property)</strong>。什么叫做DOM属性？然后这篇文章就来了…</p>
+<p>还是先讲讲使用这个修饰符我遇到的坑吧，首先，我试了试在v-bind上绑定<code>visibility</code>特性(<strong><span style="color:blue">请注意我目前的措辞</span></strong>),大概代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:visibility.prop</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是结果并不是div标签被隐藏掉，而是什么事情都不发生。What’s the fuck?😳不死心的我又尝试去掉了prop修饰符，结果虽然有了效果，但是也不是div被隐藏，而是div标签上多了一个自定义属性，在浏览器里像这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">visibility</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>坑爹啊…vue api文档里不是说可以改变DOM自带的属性嘛？其实vue里v-bind有点坑，但是之所以不生效，是因为我之前没有理解DOM里attribute和property的问题。😭</p>
+<p><span style="color:red">ok，现在进入show time时间&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span></p>
+<h1>什么叫做DOM的属性</h1>
+<p><code>属性</code>这个名称其实是对英文翻译的误解，因为在DOM里是有两个单词来解释的，一个是<code>attribute</code>,一个是<code>property</code>，这两个单词其实都有属性的意思，但是又各有不同。所以在我查了很多博客和segmentfault社区之后发现，目前最好的翻译应该是<code>attribute</code>—&gt;<strong>特性</strong>，<code>property</code>—&gt;<strong>属性</strong>。<br>
+那<em>attribute</em>和<em>property</em>到底又分别是代表什么呢？</p>
+<h2 id="1-attribute是开发者自行添加的特性-property是标签自带的属性"><a class="header-anchor" href="#1-attribute是开发者自行添加的特性-property是标签自带的属性">¶</a>1. attribute是开发者自行添加的特性，property是标签自带的属性</h2>
+<p>什么意思呢？也就是说，attribute是开发者自行在html标签里添加的，不是DOM节点自带的，而property是只要你创建了这个html标签，就存在，举个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span> <span class="attr">value</span>=<span class="string">"2333"</span> <span class="attr">data-sex</span>=<span class="string">"male"</span>&gt;</span>我是一个div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们通过javascript获取DOM的方式获取DOM节点(有NodeList和HTMLCollection两种)，最好通过<code>document.getElementsByTagName</code>或<code>document.getElementsByClassName</code>来获取，因为打印的是一个集合，否则用其余方法获取的打印出来是一个标签节点<br>
+<img src="/2017/12/06/DOM里的attribute和property/print1.png" alt=""></p>
+<p><code>id</code>和<code>data-sex</code>都是div这个节点自带的，我们可以在这个节点对象属性里看到，这些就叫做这个节点对象的<code>property</code>。而value是我们自行添加，并不是标签原本就有，属于自定义特性，我们可以在这个节点对象的<code>attributes</code>属性里看到。<br>
+但是有一个很有意思的地方，就是虽然<code>id</code>和<code>data-sex</code>是节点对象的<code>property</code>，然而我们依然可以在<code>attributes</code>找到，说明<code>attributes</code>里存放的是我们在html标签写的所有(包括自带和自定义)。</p>
+<h2 id="2-attribute和property其实定义没有明确的界限"><a class="header-anchor" href="#2-attribute和property其实定义没有明确的界限">¶</a>2. attribute和property其实定义没有明确的界限</h2>
+<p>vue里关于v-bind绑定DOM属性解释的链接是<a href="https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html#" target="_blank" rel="noopener">stackoverflow上的答案</a>，这也是我查到的最全面也是最正确的解释。</p>
+<p><code>property</code>是每个html被创建时就存在的属性，就算我们不在标签里写上id，DOM节点对象里也存在id属性，而且<code>property</code>对于不同的html标签所对应的属性也不相同。比如：input有value和type属性，div就没有。a有href属性，div就没有。img有src属性(<span style="color:blue">这里有v-bind设计的坑</span>)，div就没有，button有disabled，别的就没有。但是都会有共有的一些属性，比如：accessKey，textContent，title,hidden…</p>
+<p><code>attribute</code>是开发者自行添加在html标签上的，可以是节点对象原本就有的，也可以是自定义的特性。只要在html标签上写了，我们就可以在节点对象的<code>attributes</code>属性里找到。</p>
+<h2 id="3-attribute和property读写存在区别"><a class="header-anchor" href="#3-attribute和property读写存在区别">¶</a>3. attribute和property读写存在区别</h2>
+<p>对于<code>property</code>，我们可以直接通过对象的属性这种方式来读写，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 box</span></span><br><span class="line"><span class="built_in">console</span>.log(box.dataset.sex) <span class="comment">// 打印出 male</span></span><br><span class="line">box.id = <span class="string">'alan'</span></span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 alan</span></span><br></pre></td></tr></table></figure>
+<p>对于<code>attribute</code>，我们只能通过DOM给定的方法<code>getAttribute()</code>和<code>setAttribute()</code>来读写，当然，也可以通过DOM节点对象的<code>attributes</code>属性获取，两者是等价的,获取class时，DOM节点的className和通过<code>getAttribute('class')</code>也是等价的。请注意：这两种方法也适用于读写<code>property</code>，但是它们存在细微的差别。<br>
+<code>getAttribute()</code>获取到的值永远是<code>string</code>类型，我们可以试一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consloe.log(<span class="keyword">typeof</span> box.getAttribute(<span class="string">'draggable'</span>)) <span class="comment">// 打印出string，但是我们从上图可以看出'draggable'明明是boolean类型</span></span><br></pre></td></tr></table></figure>
+<p><code>setAttribute()</code>在设置<code>attribute</code>特性时，<strong>参数必须是字符串</strong>，但是在设置<code>property</code>时可以是任何类型，这里发现了一个有趣的现象，当我在设置<strong>draggable</strong>时，除了false(Boolean)和’false’(String)可以让<strong>draggable</strong>为false外，其余设置的值都为true。所以我大胆猜测，DOM节点对于<code>property</code>有着严格的限制，对值的类型应该做了转换。</p>
+<h2 id="4-attribute和property写入有时同步-有时不同步"><a class="header-anchor" href="#4-attribute和property写入有时同步-有时不同步">¶</a>4. attribute和property写入有时同步，有时不同步</h2>
+<p>回到上面改变<strong>id</strong>的例子上，我们通过写入<code>property</code>改变了id属性，发现，页面里的html也发生了的变化，并且在此之后获取的<code>attribute</code>也同步发生了改变</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"alan"</span> <span class="attr">value</span>=<span class="string">"2333"</span> <span class="attr">data-sex</span>=<span class="string">"male"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>)</span><br><span class="line">box.id = <span class="string">'alan'</span></span><br><span class="line"><span class="built_in">console</span>.log(box.id) <span class="comment">// 打印出出 alan</span></span><br><span class="line"><span class="built_in">console</span>.log(box.getAttribute(<span class="string">'id'</span>)) <span class="comment">// 打印出出 alan</span></span><br></pre></td></tr></table></figure>
+<p>我在stackoverflow上发现，除了input里的value属性不会导致属性和特性同步外，其余的都会同步。当然大家最好还是自己测一测😉</p>
+<blockquote>
+<p>在使用javascript的过程中，强烈建议大家通过setAttribute()来设置属性和特性，但是对于读取，还是得分开获取，因为getAttribute()只会获取到string，或者说，会强制把值改为string</p>
+</blockquote>
+<h1>vue的v-bind里对DOM的属性和特性有什么区别</h1>
+<p>现在回到文章开头的那个问题，prop这个修饰符意义到底在哪里。结合前面讲的所有知识，大概就能知道prop只适用于改变<code>property</code>。因为在vue的v-bind指令里，默认是给组件或者html标签添加<code>attribute</code>。很明显visibility不是<code>property</code>，而是<code>attribute</code>，如果想要使用prop来让标签隐藏，我们可以改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:hidden.prop</span>=<span class="string">"false"</span>&gt;</span>看的到我嘛？<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样div就会被隐藏了，因为hidden是DOM节点对象的<strong>属性</strong></p>
+<blockquote>
+<p><span style="color:red">不得不讲的v-bind的api设计坑的地方:</span></p>
+</blockquote>
+<p>v-bind在英文文档里明明写着是<strong>绑定一个DOM特性或者组件的props</strong>，但是我在使用的时候，发现img标签可以直接<code>:src</code>，What’s the fuck?😳，你特喵的不是专门出了个prop修饰符来专门绑定DOM property嘛，那为什么src就直接绑定了，还有title，id等等都可以在不使用prop修饰符的情况下直接绑定成功…这就为难我胖虎了🙄 我只好理解为：<strong>vue允许v-bind可以直接绑定常用的DOM property，对于不常用的，或者说一般不会写在html的property只能用prop修饰符来搞定了…23333神坑</strong></p>
+<blockquote>
+<p>写在最后，我用textContent属性直接就实现了v-text的功能，innerHTML直接就实现了v-html的功能😝。最后的最后，我好像发现了vue通过props让父组件传值给子组件的原理。<code>害怕.jpg</code>😁,至于思路，我就不讲啦，哈哈哈，其实就是这篇文章里讲到的。</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 前端编程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> vue </tag>
+            
+            <tag> javascript </tag>
+            
+            <tag> HTML </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[聊一聊博客搬家]]></title>
+      <url>/2017/12/03/%E8%81%8A%E4%B8%80%E8%81%8A%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6/</url>
+      <content type="html"><![CDATA[<p><strong>来来回回</strong>折腾了好久，最后还是准备重新开始收拾自己的<s>博客</s>啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333.</p>
+<blockquote class="blockquote-center"><p>请理解一个穷逼码农的日常没钱！</p>
+</blockquote>
+<p>好了，新的博客已经完全转到了<a href="https://hexo.io/zh-cn" target="_blank" rel="noopener">hexo</a>加<a href="https://github.com/" target="_blank" rel="noopener">GitHub page</a>的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站<br>
+😄</p>
+<hr>
+<p>之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内容了。<strong>一是es3目前虽然还在使用，但是es6发展如此迅速，es3不断被开发者放弃是迟早的事。二是我自己对于es语法的理解可能也仅限于一点点皮毛，如果再写，要是误导人就完蛋啦…😵</strong></p>
+<hr>
+<p>这个博客以后就用来给自己写写吐槽，然后记一记敲代码过程中学习到的一些知识。以后可能就会经常写框架的知识点啦，哈哈哈😎毕竟现在mvvm框架和webpack以及node是前端主流了，要是再不积极学习这些框架，可能就要gg… 😓</p>
+<blockquote>
+<p>请不要吐槽我的排版，只用markdown写过github README的我已经很用心的在写了，你看，这不还加了emoji😝</p>
+</blockquote>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 生活随笔 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
 </search>
