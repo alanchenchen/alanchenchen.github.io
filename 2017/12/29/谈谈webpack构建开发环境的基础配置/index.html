@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -42,6 +49,32 @@
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
 
 
@@ -79,7 +112,7 @@
 
 
 
-<meta name="description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解">
+<meta name="description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
 <meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈webpack构建开发环境的基础配置">
@@ -87,7 +120,7 @@
 <meta property="og:site_name" content="Alan Chen">
 <meta property="og:description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-29T08:00:51.829Z">
+<meta property="og:updated_time" content="2017-12-29T08:00:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈webpack构建开发环境的基础配置">
 <meta name="twitter:description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
@@ -161,7 +194,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">陈xiao伦</p>
+        <h1 class="site-subtitle" itemprop="description">陈xiao伦</h1>
       
   </div>
 
@@ -314,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">谈谈webpack构建开发环境的基础配置</h1>
+          <h2 class="post-title" itemprop="name headline">谈谈webpack构建开发环境的基础配置</h2>
         
 
         <div class="post-meta">
@@ -507,6 +540,24 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Alan Chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/" title="谈谈webpack构建开发环境的基础配置">http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
@@ -551,6 +602,12 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
 
 
     <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
   </div>
@@ -607,7 +664,7 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
                 alt="Alan Chen" />
             
               <p class="site-author-name" itemprop="name">Alan Chen</p>
-              <p class="site-description motion-element" itemprop="description">前端小白的划水之路~</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -722,7 +779,7 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -760,6 +817,12 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
       </div>
     
 
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
     
 
   </div>
@@ -1354,8 +1417,48 @@ resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>�
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
   
 
   

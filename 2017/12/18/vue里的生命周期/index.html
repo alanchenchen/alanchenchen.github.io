@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -42,6 +49,32 @@
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
 
 
@@ -79,7 +112,7 @@
 
 
 
-<meta name="description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍">
+<meta name="description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍一遍每个周期函数，2333  ¶Vue里的各个生命周期 ¶1. beforeCr">
 <meta name="keywords" content="vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue里的生命周期">
@@ -87,7 +120,7 @@
 <meta property="og:site_name" content="Alan Chen">
 <meta property="og:description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍一遍每个周期函数，2333  ¶Vue里的各个生命周期 ¶1. beforeCr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T07:11:13.374Z">
+<meta property="og:updated_time" content="2017-12-18T07:11:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue里的生命周期">
 <meta name="twitter:description" content="虽然网上能搜到一堆关于Vue2.0的生命周期的文章，但是基本都是将各个生命周期给介绍了一遍，这些文章对于初学者而言其实还是会一脸懵逼😐。这些详细的介绍对于已经使用Vue开发过实际项目的同学来讲，非常适合进阶，但是这里，我只想记分享下一些刚需的，基本每个项目都实用的东西。ok，开打开打！😎  聊之前咋们还是来简短介绍一遍每个周期函数，2333  ¶Vue里的各个生命周期 ¶1. beforeCr">
@@ -161,7 +194,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">陈xiao伦</p>
+        <h1 class="site-subtitle" itemprop="description">陈xiao伦</h1>
       
   </div>
 
@@ -314,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue里的生命周期</h1>
+          <h2 class="post-title" itemprop="name headline">Vue里的生命周期</h2>
         
 
         <div class="post-meta">
@@ -477,6 +510,24 @@
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Alan Chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://alancc.cn/2017/12/18/vue里的生命周期/" title="Vue里的生命周期">http://alancc.cn/2017/12/18/vue里的生命周期/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
@@ -525,6 +576,12 @@
 
 
     <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
   </div>
@@ -581,7 +638,7 @@
                 alt="Alan Chen" />
             
               <p class="site-author-name" itemprop="name">Alan Chen</p>
-              <p class="site-description motion-element" itemprop="description">前端小白的划水之路~</p>
+              <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
           <nav class="site-state motion-element">
@@ -696,7 +753,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -734,6 +791,12 @@
       </div>
     
 
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
     
 
   </div>
@@ -1328,8 +1391,48 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
   
 
   
