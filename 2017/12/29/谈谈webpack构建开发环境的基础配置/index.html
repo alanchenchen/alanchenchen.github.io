@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈webpack构建开发环境的基础配置">
+<meta property="og:url" content="http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/index.html">
+<meta property="og:site_name" content="Alan Chen">
+<meta property="og:description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-29T08:00:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈webpack构建开发环境的基础配置">
+<meta name="twitter:description" content="前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱 现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(就是很羡慕~)。二是将javascript应用到app的行业里，当然">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/"/>
+
+
+
+
+
+  <title>谈谈webpack构建开发环境的基础配置 | Alan Chen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alan Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">陈xiao伦</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alan Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">谈谈webpack构建开发环境的基础配置</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-29T10:18:21+08:00">
+                2017-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端构建工具/" itemprop="url" rel="index">
+                    <span itemprop="name">前端构建工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/29/谈谈webpack构建开发环境的基础配置/" class="leancloud_visitors" data-flag-title="谈谈webpack构建开发环境的基础配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前端真是个需要不断学习的it行业啊，我每天都会被各种新出的概念吓得睡不着觉，23333😱<br>
+现如今的前端在我看来分为三个方向：一是视觉系方向，就是精通各种css技能，比如什么canvas和svg大法啊，什么webGL大法，什么javascript驱动动画大法啊，反正就是能实现各种炫酷的视觉效果，这类人实在是对css理解的无比透彻(<span style="color:blue">就是很羡慕~</span>)。二是将javascript应用到app的行业里，当然也分为3大方向，webapp，hybrid app以及native app，其中受限于性能问题，目前native app可以说是大公司的主力军，最出名的就是facebook的react native了，简直就是神器！🤓我是不怎么看好hybrid app，相反，最开始被人嫌弃的webapp反而由于google推出的PWA(<span style="color:blue">progressive web app 俗称渐进式webapp</span>)而焕发新的活力。最后一个大方向就是前端工程化和组件化咯，最具代表的就是angular、vue和react三大框架，这三大框架在工程化和模块化的实现上，很大程度归功于webpack这款无敌的打包工具 ，咋们主题开始！</p>
+<h2 id="webpack为什么这么流行"><a class="header-anchor" href="#webpack为什么这么流行">¶</a>webpack为什么这么流行</h2>
+<p>这个问题就很玄学了，哈哈哈。其实对于小白或者刚入前端不久的人来说，前端工程化是个非常模糊的概念，但是对于从后端转向前端的程序猿来说，工程化是个顺理成章的玩意。<br>
+常言道，需求决定学习(<span style="color:blue">就是我说的😁</span>)。对于业务逻辑非常简单的小项目，工程化就是增加工作量，但是一旦业务逻辑开始复杂，产品经理不停给你加什么需求啊，改bug啊，那么工程化就是刚需品。所谓工程化，就是尽可能将业务逻辑分解，细化成单一的逻辑，在前端javascript里就是(<span style="color:blue">说人话就是</span>)尽可能写通用的“函数”。打个比方：</p>
+<blockquote>
+<p>在登录验证的时候我们经常需要用到手机号验证之类的</p>
+</blockquote>
+<p>1.传统开发的写法</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'.login'</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tel = $(<span class="string">'#tel'</span>).val().toString().trim()</span><br><span class="line">    <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span></span><br><span class="line">    <span class="keyword">if</span>(rule.test(tel))&#123;</span><br><span class="line">        <span class="comment">//验证成功</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//验证失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这里我写的代码还算比较规范的，23333自己吹一下，大部分传统前端应该都会采用上述类似的写法，但是大家思考一个问题，如果我们需要在不同页面里都要使用到手机号验证这个逻辑呢？难道每个需要的地方都重复复制粘贴一遍吗？想想就是噩梦…😢所以，我们修改一下，这里直接跳过简单的函数封装，我们才用“模块开发”</p>
+<p>2.模块开发的写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//写法一，CommonJS，Node遵循的规范</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">VerifyTelephone</span>(<span class="params">tel</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span> </span><br><span class="line">    <span class="keyword">return</span> rule.test(tel)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = VerifyTelephone</span><br><span class="line"><span class="comment">//然后引入就直接require就行啦</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//写法二，ES6的规范</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>  <span class="function"><span class="keyword">function</span> <span class="title">VerifyTelephone</span>(<span class="params">tel</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> rule = <span class="regexp">/^1[3|4|5|8][0-9]\d&#123;4,8&#125;$/</span> </span><br><span class="line">        <span class="keyword">return</span> rule.test(tel)</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//然后引入，直接import form就行啦</span></span><br></pre></td></tr></table></figure>
+<p>最厉害的<code>webpack</code>即将登场！既然咋们说了模块化和工程化是刚需，那么webpack为什么流行呢？因为它几乎支持目前所有主流的模块规范😜就是这么牛批！并且，webpack已经不仅仅局限于一个打包器的角色，还囊括了各种吊炸天的loader和plugins，基本通过配置webpack，我们可以轻松实现本地部署服务器，随意写ES2015/6/7/8等语法，可以写less/sass/scss/stylus等预编译工具，当然，webpack还支持各种配置的打包，什么压缩混淆啦，按需打包啦，代码切割啦，等等等等…</p>
+<h2 id="webpack最基础配置应该包括哪些"><a class="header-anchor" href="#webpack最基础配置应该包括哪些">¶</a>webpack最基础配置应该包括哪些</h2>
+<ol>
+<li>entry(入口)和output(打包出口)<br>
+entry就是告诉webpack你需要打包哪些文件，webpack是以js为入口文件，因为webpack认为<span style="color:red;font-weight:bold;">一切皆模块</span>，所以所有资源都可以被当作模块引入到js文件里，比如：图片，字体图片，CSS文件…<br>
+entry支持多种写法，单入口默认是字符串，多入口可以是数组也可以是对象。这里建议大家采用对象写法，key是每个模块的名称，value是模块路径。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:&#123;</span><br><span class="line">        main:<span class="string">'./main.js'</span>,</span><br><span class="line">        about:<span class="string">'./about.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">        path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">        publicPath: <span class="string">'../dist/'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>output决定了webpack打包后输出的一些配置，包含输出文件名称，输出的路径和打包后html里引入js或css的路径(<span style="color:blue">划重点，这是webpack最坑的地方之一😂</span>)，filename里出现了一个<code>name</code>属性，这里就是entry里提到的key，针对多入口打包非常方便！😘<code>punlicPath</code>这个属性比较奇怪，目前我个人理解为当前webpack.config.js里引入打包后文件夹的相对路径，例如打包到dist文件夹内，引入路径就是’…/dist/’，这个属性决定的是打包后html引入js，js里引入css，css里引入img这些静态资源的路径，和<code>path</code>有本质的区别</p>
+<ol start="2">
+<li>module(配置各种loader来解析非js的文件)</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:&#123;</span><br><span class="line">        main:<span class="string">'./main.js'</span>,</span><br><span class="line">        about:<span class="string">'./about.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output:&#123;</span><br><span class="line">        filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">        path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">        publicPath: <span class="string">'../dist/'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>:&#123;</span><br><span class="line">        rules:[</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,<span class="comment">//打包js，转码ES6</span></span><br><span class="line">                exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">                include: path.join(ROOTPATH, <span class="string">'src'</span>),</span><br><span class="line">                use: &#123;</span><br><span class="line">                    loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        presets: [<span class="string">'es2015'</span>, <span class="string">'latest'</span>, <span class="string">'env'</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>webpack所有的loader都写在module属性的rules里，上述代码是webpack3.0的写法，请不要再去复制粘贴网上一堆博客里的2.0写法了，可能会报错。webpack配置文档目前已经比较完善了，可以自行去看<a href="https://doc.webpack-china.org/" target="_blank" rel="noopener">中文文档</a></p>
+<ol start="3">
+<li>plugins(插件)<br>
+plugins可以说是和loader一样牛批的东西，很多高级的玩意都是通过这个来实现的，比如压缩混淆js，打包后从js里提取css为一个单独的文件，自动提取模板html并且插入js，每次启动webpack自动清除打包文件…<br>
+因为plugins实在太多，这里就不一 一列举了，上面说的功能大多就是常用的啦，尤其是<code>UglifyJSPlugin</code>(压缩混淆js),<code>extract-text-webpack-plugin</code>(提取css到一个文件)),<code>html-webpack-plugin</code>(自动生成模板html)这三者最为常用<br>
+下面是plugins的写法：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>)</span><br><span class="line"><span class="comment">//webpack.config.js</span></span><br><span class="line"> <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     entry:&#123;</span><br><span class="line">         main:<span class="string">'./main.js'</span>,</span><br><span class="line">         about:<span class="string">'./about.js'</span></span><br><span class="line">     &#125;,</span><br><span class="line">     output:&#123;</span><br><span class="line">         filename: <span class="string">'static/js/[name].bundle.js'</span>,</span><br><span class="line">         path: path.join(ROOTPATH, <span class="string">'dist'</span>),<span class="comment">//打包输出的目录</span></span><br><span class="line">         publicPath: <span class="string">'../dist/'</span></span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="built_in">module</span>:&#123;</span><br><span class="line">         rules:[</span><br><span class="line">             &#123;</span><br><span class="line">                 test: <span class="regexp">/\.js$/</span>,<span class="comment">//打包js，转码ES6</span></span><br><span class="line">                 exclude: <span class="regexp">/(node_modules|bower_components)/</span>,</span><br><span class="line">                 include: path.join(ROOTPATH, <span class="string">'src'</span>),</span><br><span class="line">                 use: &#123;</span><br><span class="line">                     loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                     options: &#123;</span><br><span class="line">                         presets: [<span class="string">'es2015'</span>, <span class="string">'latest'</span>, <span class="string">'env'</span>]</span><br><span class="line">                     &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">         ]</span><br><span class="line">     &#125;,</span><br><span class="line">     plugins:[</span><br><span class="line">         <span class="keyword">new</span> ExtractTextPlugin(<span class="string">'static/style/[name]-css.css'</span>)</span><br><span class="line">     ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>devServer(本地开发服务器)<br>
+这个配置比较常用，但是很多人第一次玩webpack可能根本不会注意到😅，通过这个配置，我们可以轻松实现搭建一个本地服务器，并且实现js的热更新和热替换。当然，webpack除了支持这种最简便的属性配置外，也提供基于’<a href="http://www.expressjs.com.cn/" target="_blank" rel="noopener">express</a>’框架的中间件，包括服务器中间件，热更新和热替换的中间件。具体详情请戳官网<br>
+devServer常用的配置如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">   devServer: &#123;</span><br><span class="line">	contentBase: process.cwd(),<span class="comment">//当前是以项目根目录作为本地服务器根目录</span></span><br><span class="line">	port: port,</span><br><span class="line">	hot: <span class="literal">true</span>,</span><br><span class="line">	inline: <span class="literal">true</span>,</span><br><span class="line">	openPage: <span class="string">'dist/index.html'</span>,</span><br><span class="line">	historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">	noInfo: <span class="literal">true</span>,<span class="comment">//不显示打包的信息</span></span><br><span class="line">	overlay: &#123;<span class="comment">//全屏显示错误和警告</span></span><br><span class="line">		warnings: <span class="literal">true</span>,</span><br><span class="line">		errors: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一定要注意<code>contentBase</code>的含义，这个属性是说作为服务器的根目录，其实webpack的devServer在你打包后运行时是找不到打包文件的，因为webpack将其放在了电脑内存中。所以在设置开发环境时的<code>output</code>选项里的<code>publicPath</code>得自行脑补了…哈哈哈哈😊</p>
+<ol start="5">
+<li>devtool(生成soureMap)<br>
+一定有很多新手不知道这到底是个啥玩意，其实只要我们仔细思考一样就会发现sourceMap非常重要。sourceMap其实是每当webpack打包后生成的对应js的映射文件，用于debugger。因为打包后文件基本无法阅读，所以这个sourceMap可以直接被绝大多数浏览器解析，根据不同配置，基本跟源码一样。<br>
+sourceMap有很多不同的配置，具体详情请移步官网</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool: env == <span class="string">'production'</span> ? <span class="string">'source-map'</span> : <span class="string">'eval-source-map'</span></span><br></pre></td></tr></table></figure>
+<p>但是一般我们开发都是上述配置，开发环境就生成非常完善的映射，生产环境则减小文件大小</p>
+<ol start="6">
+<li>resolve<br>
+resolve常用的是两个选项：<code>alias</code>和<code>extensions</code>，前者是用来解决路径的依赖，比如自定义’@‘为’./src/components’路径。后者是用来让webpack自动解析定义后缀名的文件,常见写法如下：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> resolve: &#123;</span><br><span class="line">     alias: &#123;</span><br><span class="line">      <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src'</span>)</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;,</span><br><span class="line">extensions: [<span class="string">'.js'</span>, <span class="string">'.json'</span>,<span class="string">'jsx'</span>,<span class="string">'css'</span>]</span><br><span class="line"><span class="comment">//.js和.json是默认值，可以不用定义</span></span><br></pre></td></tr></table></figure>
+<p>以上就是webpack用来配置一个完整功能的基本配置啦，😁通过这一套配置，就可以轻松实现一个开发和打包兼备的webpack模板。</p>
+<h2 id="通过webpack来看前端工程化"><a class="header-anchor" href="#通过webpack来看前端工程化">¶</a>通过webpack来看前端工程化</h2>
+<p>其实我个人对于前端工程化这个词理解的也很浅显，这两年因为mvvm框架的大火导致工程化和组件化这些新词不断涌入到前端开发里。我个人感觉，随着前端不断被重视，随着前后台分离越来越彻底，那么前端就要负责更多的业务逻辑，而后台只用扮演接受数据和处理数据的角色。对于中大型项目，工程化是必须的，我个人理解为，工程化所需要的基本条件是：webpack、gulp(用task流程化)、一种mvvm框架。这三者是必须的，甚至css module或者css in js这些也可以用来把css工程化。<br>
+<span style="color:blue">对于不同的开发场景，我给自己定义了两者种工程化开发方式：</span></p>
+<ol>
+<li>传统多页面开发，一定要用webpack模块化，甚至可以使用<code>jade</code>这些模板引擎，js编写可以使用CommonJS或者ES6 module，建议使用ES6 module。</li>
+</ol>
+<blockquote>
+<p>这里我推荐一下自己写的此类场景的webpack模板 – <a href="https://github.com/alanchenchen/simple-template" target="_blank" rel="noopener">simple-template</a>😅,轻松解决本地服务器和打包问题</p>
+</blockquote>
+<ol start="2">
+<li>SPA单页面开发，目前这是mvvm框架的开发方式，也是主流。Angular我本身没有学习所以不加评论，Vue我建议直接用官方的<code>vue-cli</code>是最舒心的。对于React，官方的<code>create-react-app</code>我并没有使用，听说功能很丰富只是过于冗余，所以网上有一堆大佬写的脚手架模板，这里我推荐的是阿里金服开发的<a href="https://github.com/dvajs/dva/blob/master/README_zh-CN.md" target="_blank" rel="noopener">dva-cli</a>，非常好用哦，搭配着<span style="color:blue">AntDesign</span>食用更加哦！</li>
+</ol>
+<blockquote>
+<p>当然这里还是推荐一下啊在下写的一个<a href="https://github.com/alanchenchen/react-template" target="_blank" rel="noopener">react-template</a>哈哈哈哈😋目前功能也比较全乎了，并且还抽离了第三库的公共模块，减小打包体积。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>对，别说话，打钱！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Alan Chen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Alan Chen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Alan Chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/" title="谈谈webpack构建开发环境的基础配置">http://alancc.cn/2017/12/29/谈谈webpack构建开发环境的基础配置/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/18/vue里的生命周期/" rel="next" title="Vue里的生命周期">
+                <i class="fa fa-chevron-left"></i> Vue里的生命周期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/13/hexo入坑指南/" rel="prev" title="hexo入坑指南">
+                hexo入坑指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    
+    <div id="gitalk-container"></div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Alan Chen" />
+            
+              <p class="site-author-name" itemprop="name">Alan Chen</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alanchenchen" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:739709491@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-heart"></i>
+                Friends
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://jiangxiaoyuboy.github.io/" title="僵小鱼" target="_blank">僵小鱼</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack为什么这么流行"><span class="nav-number">1.</span> <span class="nav-text">¶webpack为什么这么流行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack最基础配置应该包括哪些"><span class="nav-number">2.</span> <span class="nav-text">¶webpack最基础配置应该包括哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过webpack来看前端工程化"><span class="nav-number">3.</span> <span class="nav-text">¶通过webpack来看前端工程化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alan Chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" href="https://pages.github.com">GitHub Pages</a> and <a target="_blank" href="https://hexo.io/zh-cn/">Hexo</a> Created by Alan</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+
+          
+      <link rel='stylesheet' href="https://unpkg.com/gitalk/dist/gitalk.css">
+      <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  'de4335af8003ebc5b20e', 
+            clientSecret: '1c1846ed8fbfff4b5cf536d891b6eb2e58f80eb9',
+            id: window.location.pathname,
+            repo: 'alanchenchen.github.io', 
+            owner: 'alanchenchen', 
+            admin: 'alanchenchen', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
+
+  
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("DMw1RsMTYeeyQRU1FeLoNMAJ-gzGzoHsz", "FU9l4zVx7Hf4EECphF0KugKz");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
