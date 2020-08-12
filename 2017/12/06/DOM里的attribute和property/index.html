@@ -940,12 +940,13 @@
 
    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+      <script src="https://unpkg.com/blueimp-md5@2.17.0/js/md5.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
       <script type="text/javascript">
           var gitalk = new Gitalk({
             clientID:  'de4335af8003ebc5b20e', 
             clientSecret: '1c1846ed8fbfff4b5cf536d891b6eb2e58f80eb9',
-            id: decodeURI(window.location.pathname),
+            id: md5(location.pathname),
             repo: 'alanchenchen.github.io', 
             owner: 'alanchenchen', 
             admin: ['alanchenchen'], 
