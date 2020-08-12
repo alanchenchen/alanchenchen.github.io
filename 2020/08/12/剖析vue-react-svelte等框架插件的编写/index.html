@@ -101,7 +101,7 @@
 
 
 
-  <meta name="keywords" content="Alan Chen的个人潜水技术博客 javascript ES6/7/8 vue react node webpack electron~" />
+  <meta name="keywords" content="vue,react," />
 
 
 
@@ -112,16 +112,18 @@
 
 
 
-<meta name="description" content="前端小白的划水之路~ 涉及JavaScript,vue,react,node,electron和go开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alan Chen">
-<meta property="og:url" content="http://alancc.cn/archives/2018/07/index.html">
+<meta name="description" content="每一个web框架都支持组件，只有在vue框架中存在plugin这一说法。其实在react和svelte中也可以手动实现插件，我们接下来所说的插件主要是指动态改变ui的插件，类似于开源ui库中的dialog、modal、toast等。主要分析vue插件，react和svelte插件实现起来思路类似。 vue插件 在vue的官方文档里，对plugin的解释为，可以随意自定义任何功能，绑定给Vue、Vu">
+<meta name="keywords" content="vue,react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剖析vue&#x2F;react&#x2F;svelte等框架插件的编写">
+<meta property="og:url" content="http://alancc.cn/2020/08/12/剖析vue-react-svelte等框架插件的编写/index.html">
 <meta property="og:site_name" content="Alan Chen">
-<meta property="og:description" content="前端小白的划水之路~ 涉及JavaScript,vue,react,node,electron和go开发">
+<meta property="og:description" content="每一个web框架都支持组件，只有在vue框架中存在plugin这一说法。其实在react和svelte中也可以手动实现插件，我们接下来所说的插件主要是指动态改变ui的插件，类似于开源ui库中的dialog、modal、toast等。主要分析vue插件，react和svelte插件实现起来思路类似。 vue插件 在vue的官方文档里，对plugin的解释为，可以随意自定义任何功能，绑定给Vue、Vu">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-12T10:30:42.185Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Alan Chen">
-<meta name="twitter:description" content="前端小白的划水之路~ 涉及JavaScript,vue,react,node,electron和go开发">
+<meta name="twitter:title" content="剖析vue&#x2F;react&#x2F;svelte等框架插件的编写">
+<meta name="twitter:description" content="每一个web框架都支持组件，只有在vue框架中存在plugin这一说法。其实在react和svelte中也可以手动实现插件，我们接下来所说的插件主要是指动态改变ui的插件，类似于开源ui库中的dialog、modal、toast等。主要分析vue插件，react和svelte插件实现起来思路类似。 vue插件 在vue的官方文档里，对plugin的解释为，可以随意自定义任何功能，绑定给Vue、Vu">
 
 
 
@@ -151,13 +153,13 @@
 
 
 
-  <link rel="canonical" href="http://alancc.cn/archives/2018/07/"/>
+  <link rel="canonical" href="http://alancc.cn/2020/08/12/剖析vue-react-svelte等框架插件的编写/"/>
 
 
 
 
 
-  <title>归档 | Alan Chen</title>
+  <title>剖析vue/react/svelte等框架插件的编写 | Alan Chen</title>
   
 
 
@@ -176,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -304,74 +306,284 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 6 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2018">2018</h2>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alancc.cn/2020/08/12/剖析vue-react-svelte等框架插件的编写/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alan Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alan Chen">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/13/hexo入坑指南/" itemprop="url">
-              
-                <span itemprop="name">hexo入坑指南</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">剖析vue/react/svelte等框架插件的编写</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-13T23:07:03+08:00"
-              content="2018-07-13" >
-          07-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-12T15:59:04+08:00">
+                2020-08-12
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端编程/" itemprop="url" rel="index">
+                    <span itemprop="name">前端编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/08/12/剖析vue-react-svelte等框架插件的编写/" class="leancloud_visitors" data-flag-title="剖析vue/react/svelte等框架插件的编写">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>每一个web框架都支持组件，只有在vue框架中存在plugin这一说法。其实在react和svelte中也可以手动实现插件，我们接下来所说的插件主要是指<span style="color: blue">动态改变ui的插件</span>，类似于开源ui库中的dialog、modal、toast等。主要分析vue插件，react和svelte插件实现起来思路类似。</p>
+<h1>vue插件</h1>
+<p>在vue的官方文档里，对plugin的解释为，可以随意自定义任何功能，绑定给<code>Vue</code>、<code>Vue.prototype</code>等。文档这里说的非常宽泛，我们这样理解，比如<code>VueRouter</code>，我们在使用router后，可以直接通过<code>Vue.protoytp.$router</code>使用导航，也可以直接从router包里导入组件来使用<code>RouterView</code>。以下只讨论插件编写逻辑，插件编写的api请参考vue文档，按照使用场景可以把插件分为以下几类：</p>
+<ul>
+<li>纯逻辑插件，不涉及ui组件导出或者不涉及ui组件展示。例如：编写一个函数，编写一个全局filter，编写一个全局mixin等。</li>
+<li>纯ui插件，这类插件其实就是纯组件，只不过在<code>Vue.use</code>时候，自动注册了全局组件而已，例如<a href="https://github.com/alanchenchen/vue2-dialog" target="_blank" rel="noopener">我写的dialog插件</a>。就是让开发者导入然后在template使用组件。</li>
+<li>ui加逻辑插件，这里我们不说上面两种的混合产物，而是讨论主流ui库的插件，例如toast。</li>
+</ul>
+<h2 id="怎样实现一个toast全局调用"><a class="header-anchor" href="#怎样实现一个toast全局调用">¶</a>怎样实现一个toast全局调用</h2>
+<p>如果只是编写纯逻辑插件，我们只需要编写好逻辑即可，因为既不需要展示ui（html展示），也不需要动态修改ui内容。如果只是编写纯ui插件，我们只需要写好组件即可，然后在插件暴露出去之前，全局注册组件。那么编写一个toast需要怎么实现？我们先来看下大多数toast使用方式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> ui <span class="keyword">from</span> <span class="string">"ui"</span>;</span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line">Vue.use(ui);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example.vue</span></span><br><span class="line"><span class="comment">// 弹出文本toast</span></span><br><span class="line"><span class="keyword">this</span>.$_Toast.show(&#123;</span><br><span class="line">    text: <span class="string">"lucky chance！"</span>,</span><br><span class="line">    duration: <span class="number">3000</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 弹出带成功icon的toast</span></span><br><span class="line"><span class="keyword">this</span>.$_Toast.show(&#123;</span><br><span class="line">    text: <span class="string">"lucky chance！"</span>,</span><br><span class="line">    type: <span class="string">"success"</span>,</span><br><span class="line">    duration: <span class="number">3000</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 弹出loading状态的toast</span></span><br><span class="line"><span class="keyword">this</span>.$_Toast.show(&#123;</span><br><span class="line">    text: <span class="string">"processing..."</span>,</span><br><span class="line">    type: <span class="string">"loading"</span>,</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 还得记得手动关闭</span></span><br><span class="line">    <span class="keyword">this</span>.$_Toast.hide();</span><br><span class="line">&#125;, <span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码的使用方式明显是函数调用，但是却可以自定义弹出ui的内容，这是怎么实现的呢？我之前写的toast插件是纯组件调用，也就是在template里传参，这明显不符合函数调用。</p>
+<h3 id="脑洞一：很简单的可以想到一个实现方法-在插件里编写html不就行了嘛"><a class="header-anchor" href="#脑洞一：很简单的可以想到一个实现方法-在插件里编写html不就行了嘛">¶</a>脑洞一：很简单的可以想到一个实现方法，在插件里编写html不就行了嘛</h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 简单实现</span></span><br><span class="line"><span class="keyword">const</span> genDiv = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> toastDom = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">    toastDom.contentText = text;</span><br><span class="line">    <span class="comment">// ...省略duration和loading逻辑</span></span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(toastDom);</span><br><span class="line">    <span class="keyword">return</span> toastDom;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    install(Vue) &#123;</span><br><span class="line">        Vue.$_Toast = &#123;</span><br><span class="line">            _DOM: <span class="literal">null</span>,</span><br><span class="line">            show(&#123;</span><br><span class="line">                text = <span class="string">""</span>,</span><br><span class="line">                type = <span class="string">"text"</span>,</span><br><span class="line">                duration = <span class="number">2000</span></span><br><span class="line">            &#125; = &#123;&#125;) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>._DOM == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">this</span>._DOM = genDiv();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 版本一，直接显示元素</span></span><br><span class="line">                    <span class="keyword">this</span>._DOM.style.display = <span class="string">"none"</span>;</span><br><span class="line">                    <span class="comment">// 版本二，插入elemtn节点</span></span><br><span class="line">                    <span class="keyword">this</span>._DOM = genDiv();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            hide() &#123;</span><br><span class="line">                <span class="comment">// 版本一，直接隐藏元素</span></span><br><span class="line">                <span class="keyword">this</span>._DOM.style.display = <span class="string">"none"</span>;</span><br><span class="line">                <span class="comment">// 版本二，去除elemtn节点</span></span><br><span class="line">                <span class="built_in">document</span>.body.removeChild(<span class="keyword">this</span>._DOM);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优缺点分析：实现简单，不烧脑，轻松就能想到。但是后期维护简直灾难，这里只是非常简单的html结构，一旦结构复杂，比如想实现一个高度定制的dialog或者modal就直接gg。</p>
+<h3 id="脑洞二：编写ui采用vue组件-然后生成一个vue实例-来通过data动态修改内容"><a class="header-anchor" href="#脑洞二：编写ui采用vue组件-然后生成一个vue实例-来通过data动态修改内容">¶</a>脑洞二：编写ui采用vue组件，然后生成一个vue实例，来通过data动态修改内容</h3>
+<p>这里会有3个疑问</p>
+<ol>
+<li>怎么来将vue组件映射到真实的DOM展示并控制</li>
+<li>怎么实现脑洞一的动态显示隐藏效果，虽然可以很简单实现元素隐藏，但总觉得不完美</li>
+<li>vue/react/svelte这类框架都不允许动态插入或删除节点，vue的方式只有template（render函数），react只有jsx，svelte只有template，怎么实现疑问2中的动态插入或删除内容节点<br>
+思路如下：</li>
+</ol>
+<ul>
+<li>组件还是使用vue编写，就跟你写组件一样</li>
+<li>在插件js里，导入这个组件，然后生成一个根实例，生成一个新的DOM，将根实例挂载DOM<br>
+这样就解决了以上疑问，并且解决了脑洞一的弊端</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插件简单代码</span></span><br><span class="line"><span class="keyword">import</span> Toast <span class="keyword">from</span> <span class="string">"toast.vue"</span>;</span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    install(Vue) &#123;</span><br><span class="line">        <span class="keyword">const</span> toastDom = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">        toastDom.id = <span class="string">"toastRootInstance"</span>;</span><br><span class="line">        <span class="keyword">const</span> rootIns = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">            render: <span class="function">(<span class="params">h</span>) =&gt;</span> h(Toast),</span><br><span class="line">        &#125;).$mount(<span class="string">"#toastRootInstance"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详细代码见:</p>
+<blockquote>
+<p>下列插件采用vue加ts的项目模版写法，不熟悉的请前去了解<code>vue-class-component</code></p>
+</blockquote>
+<ul>
+<li><a href="https://github.com/alanchenchen/blogPractice/tree/master/Dialog" target="_blank" rel="noopener">dialog插件</a></li>
+<li><a href="https://github.com/alanchenchen/blogPractice/tree/master/Toast" target="_blank" rel="noopener">toast插件</a><br>
+写到这里，其实这篇文章就可以结束了，脑洞二里的方法到目前为止是我觉得最好的实现全局插件的方式，有如下优点：</li>
+</ul>
+<ol>
+<li>后期维护ui，可以直接修改组件，同时组件也可以导出在别的组件里组件调用</li>
+<li>动态增删DOM节点，不会让html平白显示一堆代码</li>
+<li>虽然我没看过element-ui，iview或者antd的源码，但是大家可以仔细去观察，当你使用过全局toast后，body上方一定会多出一个新的div结构，这个就是我们上面的思路，新建一个新的根实例来管理我们的组件</li>
+</ol>
+<h1>react实现一个全局ui插件</h1>
+<p>大致思路和vue相似，唯一的区别在于，react的父子组件完全解藕，所有不存在<code>this.$_Toast</code>或 <code>Vue.prototype.$_Toast</code>这种调用方式。大家在使用antd的时候就会发现，插件跟组件导入一样，只不过插件是函数，组件按照jsx调用。</p>
+<h1>svelte插件</h1>
+<p>svelte无法实现全局ui插件，因为它没有virtual DOM，只能通过template解析成真实DOM。但是svelte可以实现纯逻辑插件，类似于你写一个纯js。</p>
+<h1>总结</h1>
+<p>写插件的前提是要会写组件，为什么会出现全局ui插件这种东西？主要是因为类似toast、dialog这种调用频繁，并且也希望能直接在js里使用，看到这里，开源ui库离你应该不远了🙈🙈🙈🙈</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>对，别说话，打钱！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Alan Chen 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Alan Chen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Alan Chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://alancc.cn/2020/08/12/剖析vue-react-svelte等框架插件的编写/" title="剖析vue/react/svelte等框架插件的编写">http://alancc.cn/2020/08/12/剖析vue-react-svelte等框架插件的编写/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/13/hexo入坑指南/" rel="next" title="hexo入坑指南">
+                <i class="fa fa-chevron-left"></i> hexo入坑指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -379,6 +591,13 @@
 
 
           
+  
+    
+    <div id="gitalk-container"></div>
+
+  
+  
+
 
         </div>
         
@@ -399,8 +618,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -494,6 +722,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">vue插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎样实现一个toast全局调用"><span class="nav-number">1.1.</span> <span class="nav-text">¶怎样实现一个toast全局调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脑洞一：很简单的可以想到一个实现方法-在插件里编写html不就行了嘛"><span class="nav-number">1.1.1.</span> <span class="nav-text">¶脑洞一：很简单的可以想到一个实现方法，在插件里编写html不就行了嘛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脑洞二：编写ui采用vue组件-然后生成一个vue实例-来通过data动态修改内容"><span class="nav-number">1.1.2.</span> <span class="nav-text">¶脑洞二：编写ui采用vue组件，然后生成一个vue实例，来通过data动态修改内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">react实现一个全局ui插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">svelte插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -645,6 +889,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 

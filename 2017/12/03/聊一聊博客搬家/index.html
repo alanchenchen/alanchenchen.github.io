@@ -101,7 +101,7 @@
 
 
 
-  <meta name="keywords" content="生活随笔," />
+  <meta name="keywords" content="Alan Chen的个人潜水技术博客 javascript ES6/7/8 vue react node webpack electron~" />
 
 
 
@@ -113,14 +113,13 @@
 
 
 <meta name="description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内">
-<meta name="keywords" content="生活随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊一聊博客搬家">
 <meta property="og:url" content="http://alancc.cn/2017/12/03/聊一聊博客搬家/index.html">
 <meta property="og:site_name" content="Alan Chen">
 <meta property="og:description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-06T05:54:24.000Z">
+<meta property="og:updated_time" content="2020-08-12T08:00:31.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊一聊博客搬家">
 <meta name="twitter:description" content="来来回回折腾了好久，最后还是准备重新开始收拾自己的博客啦…最开始本来是想在wordpress一直待下去，奈何没钱买服务器，23333. 请理解一个穷逼码农的日常没钱！  好了，新的博客已经完全转到了hexo加GitHub page的怀抱，谁叫GitHub财大气粗免费呢。果然不愧是全球最大的同性交友网站 😄  之前在wordpress那个博客上写过几篇关于es3的知识，自己打算以后不再写es3的内">
@@ -133,7 +132,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -220,16 +219,6 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -370,6 +359,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/生活随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">生活随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -482,12 +493,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/生活随笔/" rel="tag"># 生活随笔</a>
-          
-        </div>
-      
 
       
       
@@ -586,7 +591,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -709,6 +714,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
