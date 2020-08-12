@@ -674,13 +674,13 @@
           var gitalk = new Gitalk({
             clientID:  'de4335af8003ebc5b20e', 
             clientSecret: '1c1846ed8fbfff4b5cf536d891b6eb2e58f80eb9',
-            id: window.location.pathname,
+            id: decodeURI(window.location.pathname),
             repo: 'alanchenchen.github.io', 
             owner: 'alanchenchen', 
-            admin: 'alanchenchen', 
-            distractionFreeMode: 'true',
+            admin: ['alanchenchen'], 
+            distractionFreeMode: true,
             language: 'zh-CN',
-            createIssueManually: 'true'
+            createIssueManually: true
           })
           gitalk.render('gitalk-container')
       </script>
