@@ -8,7 +8,7 @@
   "scripts": {
     "serve": "hexo server",
     "build": "hexo generate",
-    "push": "hexo deploy",
+    "push": "npm run clean && npm run build && hexo deploy",
     "clean": "hexo clean"
   },
   "dependencies": {

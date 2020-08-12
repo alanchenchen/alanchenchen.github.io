@@ -357,8 +357,11 @@ gitalk:
   clientSecret: 1c1846ed8fbfff4b5cf536d891b6eb2e58f80eb9
   repo: alanchenchen.github.io   #仓库名称
   owner: alanchenchen    #github用户名
-  admin: alanchenchen
+  admin: 
+    - alanchenchen
   distractionFreeMode: true
+  language: zh-CN
+  createIssueManually: true
 
 # Disqus
 disqus:
@@ -488,7 +491,7 @@ needmoreshare2:
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
 duoshuo_info:
-  ua_enable: false
+  ua_enable: true
   admin_enable: false
   user_id: 0
   #admin_nickname: Author

@@ -66,9 +66,8 @@
     <div class="comments" id="comments">
     </div>
     
-  {% elseif theme.gitalk.distractionFreeMode %}  
+  {% elseif theme.gitalk.enable %}  
     <div id="gitalk-container"></div>
-
   {% endif %}
   
 {% endif %}

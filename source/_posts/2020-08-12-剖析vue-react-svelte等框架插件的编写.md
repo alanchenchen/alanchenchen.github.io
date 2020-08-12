@@ -122,7 +122,7 @@ export default {
 3. 虽然我没看过element-ui，iview或者antd的源码，但是大家可以仔细去观察，当你使用过全局toast后，body上方一定会多出一个新的div结构，这个就是我们上面的思路，新建一个新的根实例来管理我们的组件
 
 # react实现一个全局ui插件
-大致思路和vue相似，唯一的区别在于，react的父子组件完全解藕，所有不存在`this.$_Toast`或 `Vue.prototype.$_Toast`这种调用方式。大家在使用antd的时候就会发现，插件跟组件导入一样，只不过插件是函数，组件按照jsx调用。
+大致思路和vue相似，唯一的区别在于，react的父子组件完全解耦，所以不存在`this.$_Toast`或 `Vue.prototype.$_Toast`这种调用方式。大家在使用antd的时候就会发现，插件跟组件导入一样，只不过插件是函数，组件按照jsx调用。
 
 # svelte插件
 svelte无法实现全局ui插件，因为它没有virtual DOM，只能通过template解析成真实DOM。但是svelte可以实现纯逻辑插件，类似于你写一个纯js。
