@@ -357,7 +357,7 @@ gitalk:
   clientSecret: 1c1846ed8fbfff4b5cf536d891b6eb2e58f80eb9
   repo: alanchenchen.github.io   #仓库名称
   owner: alanchenchen    #github用户名
-  admin: 
+  admin:
     - alanchenchen
   distractionFreeMode: true
   language: zh-CN
